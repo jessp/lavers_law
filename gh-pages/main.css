@@ -1,0 +1,58 @@
+* {
+	box-sizing: border-box;
+}
+
+.timeline {
+	position: relative;
+}
+
+.timeline svg {
+	position: absolute;
+	width: 100%;
+	pointer-events: none;
+	overflow: visible;
+}
+
+.timelineSegment {
+	padding: 2.5%;
+	position: absolute;
+	display: grid;
+	grid-template-columns: minmax(90px, 150px) 1fr 1fr;
+	grid-template-rows: 0fr 1fr;
+	grid-template-areas: 
+	    "image header header"
+	    "image paragraph paragraph";
+	font-size: 90%;
+}
+
+.timelineSegment p {
+	margin-top: 0px;
+	margin-bottom: 0.25em;
+	grid-area: header;
+}
+
+.timelineSegment div {
+	grid-area: image;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.timelineSegment ul {
+	grid-area: paragraph;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.centreLine {
+	stroke: black;
+}
+
+.dashLine line:not(.timeLineDash) {
+	stroke: black;
+}
+
+@media (max-width: 600px) {
+	.fullwidth {
+		max-width: 100%;
+	}
+}
