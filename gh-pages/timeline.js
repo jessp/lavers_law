@@ -2,11 +2,10 @@ class Timeline {
   constructor(holder) {
   	this.block_height = 200;
   	const circle_color = "red";
-  	const stroke_width = 3;
+  	const stroke_width = 4;
+  	this.circle_width = 40;
 
   	this.holder = d3.select(holder);
-  	this.svg = this.holder.append("svg")
-  		.attr("height", this.block_height/2 * 25 + "px");
 
   	const images = [
   	"2013_Devastée Womenswear Spring-Summer 2013_da3c48f10d33115e8f44f9bd31194946fd86e6bbcfbf19967bf5990784f7f26e.jpg",
@@ -37,90 +36,57 @@ class Timeline {
   		.data(this.images, e => Object.keys(e)[0])
   		.enter()
   		.append("div")
-  		.attr("class", "timelineSegment")
-  		.style("height", this.block_height + "px")
-  		.style("left", (d, i) => i%2 === 0 ? "0%" : "55%")
-  		.style("width", "47.5%")
-  		.style("margin-top", (d, i) => i * this.block_height/2 + "px")
+  		.attr("class", "timelineSegment");
 
   	this.holder.selectAll("div.timelineSegment")
+  		.append("div")
+  		.attr("class", "yearLabel")
   		.append("p")
+  		.html(d => Object.keys(d)[0]);
 
-  	this.holder.selectAll("div.timelineSegment")
-  		.append("ul")
+  	let circleHolder = this.holder.selectAll("div.timelineSegment")
+  		.append("div")
+  		.attr("class", "dotLabel")
+  		.append("svg")
+  		.attr("width", this.circle_width)
+  		.attr("height", this.circle_width);
 
-  	this.holder.selectAll("div.timelineSegment")
-  		.append("div");
-
-  	this.svg.append("line")
-  		.attr("class", "centreLine")
-  		.attr("x1", "47.5%")
-  		.attr("x2", "47.5%")
-  		.attr("y1", "0%")
-  		.attr("y2", "100%")
-  		.attr("stroke-dasharray", "8 4");
-
-  	this.svg.append("line")
-  		.attr("class", "redLine")
-  		.attr("stroke", circle_color)
-  		.attr("stroke-width", stroke_width)
-  		.attr("fill", "none")
-  		.attr("x1", "47.5%")
-  		.attr("x2", "47.5%");
-
-  	this.dashes = this.svg.selectAll(".dashLine")
-  		.data(this.images, e => Object.keys(e)[0])
-  		.enter()
-  		.append("g")
-  		.attr("class", "dashLine")
-  		.attr("transform", (d, i) => `translate(0, ${this.block_height/2 * i})`)
-
-  	this.dashes.append("line")
-  		.attr("x1", "calc(47.5% - 6px)")
-  		.attr("x2", "calc(47.5% + 6px)")
-  		.attr("y1", "-6px")
-  		.attr("y2", "6px")
-  		.attr("stroke-width", circle_color/2);
-
-  	this.dashes.append("line")
-  		.attr("x1", "calc(47.5% + 6px)")
-  		.attr("x2", "calc(47.5% - 6px)")
-  		.attr("y1", "-6px")
-  		.attr("y2", "6px")
-  		.attr("stroke-width", circle_color/2);
-
-  	this.dashes.append("text")
-  		.attr("x", "50%")
-  		.attr("dy", 4)
-  		.text(d => Object.keys(d)[0]);
-
-  	this.dashes.append("circle")
-  		.attr("class", "littleCircle")
-  		.attr("r",0)
-  		.attr("cx", "47.5%")
-  		.attr("fill", circle_color);
-
-  	this.dashes.append("circle")
+  	circleHolder.append("circle")
   		.attr("class", "bigCircle")
-  		.attr("r",0)
-  		.attr("cx", "47.5%")
-  		.attr("fill", "none")
-  		.attr("stroke", circle_color)
-  		.attr("stroke-width", stroke_width);
+  		.attr("r", 0)
+  		.attr("cx", this.circle_width/2)
+  		.attr("cy", this.circle_width/2);
 
-  	this.dashes.append("line")
-  		.attr("class", "timeLineDash")
-  		.attr("x1", "47.5%")
-  		.attr("fill", "none")
-  		.attr("stroke", circle_color)
-  		.attr("stroke-width", stroke_width);
+  	circleHolder.append("circle")
+  		.attr("class", "littleCircle")
+  		.attr("r", 4)
+  		.attr("cx", this.circle_width/2)
+  		.attr("cy", this.circle_width/2);
+
+  	let fashionLabel = this.holder.selectAll("div.timelineSegment")
+  		.append("div")
+  		.attr("class", "fashionLabel");
+
+  	fashionLabel.append("div");
+
+  	fashionLabel.append("p");
+
+  	fashionLabel.append("ul");
 
   	this.populateTimeline();
   }
 
   populateTimeline(){
 
-  	this.segments.selectAll("p")
+  	this.holder.selectAll("div.timelineSegment")
+  		.attr("class", function(d){
+  			if (Object.values(d)[0].length < 1){
+  				return "timelineSegment noItems"
+  			} 
+  			return "timelineSegment";
+  		})
+
+  	this.holder.selectAll(".fashionLabel p")
   		.html(function(d){
   			const num_items = Object.values(d)[0].length;
   			if (num_items > 0){
@@ -129,7 +95,7 @@ class Timeline {
   			return "";
   		});
 
-  	this.segments.selectAll("div")
+  	this.holder.selectAll(".fashionLabel div")
   		.style("background-image", function(d){
   			const num_items = Object.values(d)[0].length;
   			if (num_items > 0){
@@ -138,7 +104,7 @@ class Timeline {
   			return null;
   		})
 
-  	this.segments.selectAll("ul")
+  	this.holder.selectAll(".fashionLabel ul")
   		.selectAll("li")
   		.data(d => Object.entries(this.reduceArray(Object.values(d)[0])))
   		.enter()
@@ -147,43 +113,11 @@ class Timeline {
   			return `${d[0]} ${d[1].length > 1 ? "(x" + d[1].length + ")" : ""}`
   		})
 
-  	this.dashes.selectAll(".timeLineDash")
-  		.attr("x2", function(d){
-  			if(Object.values(d)[0].length === 0) {
-  				return "47.5%";
-  			}
-  			const index = parseInt(Object.keys(d)[0]) - 1989;
-  			if (index % 2 === 0){
-  				return "0%";
-  			} else {
-  				return "100%";
-  			}
-  		});
-
-  	this.dashes.selectAll("text")
-  		.attr("x", "51%")
-  		.attr("dy", function(d){
-  			if(Object.values(d)[0].length === 0) {
-  				return 4;
-  			}
-  			const index = parseInt(Object.keys(d)[0]) - 1989;
-  			if (index % 2 === 0){
-  				return 4;
-  			} else {
-  				return -6;
-  			}
+  	this.holder.selectAll(".bigCircle")
+  		.attr("r", function(d){
+  			const num_items = Object.values(d)[0].length;
+  			return num_items * 3;
   		})
-
-  	this.dashes.selectAll(".littleCircle")
-  		.attr("r", d => Object.values(d)[0].length > 0 ? 5 : 0)
-
-  	this.dashes.selectAll(".bigCircle")
-  		.attr("r", d => Object.values(d)[0].length * 4)
-
-  	this.svg.select(".redLine")
-  		.attr("y1", (this.images.findIndex(e => Object.values(e)[0].length > 0)/2 * this.block_height))
-  		.attr("y2", (this.findLastIndex(this.images)/2 * this.block_height));
-
 
   }
 

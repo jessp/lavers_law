@@ -1,3 +1,8 @@
+:root {
+  --main-grey: #cecece;
+  --accent: red;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -6,42 +11,117 @@
 	position: relative;
 }
 
-.timeline svg {
-	position: absolute;
+.timelineSegment {
 	width: 100%;
-	pointer-events: none;
-	overflow: visible;
+	display: grid;
+	grid-template-columns: 50px 80px auto;
+	grid-template-rows: 1fr;
+	grid-template-areas: 
+	    "year dot fashion";
+	margin: 0px;
+	position: relative;
 }
 
-.timelineSegment {
-	padding: 2.5%;
-	position: absolute;
+.yearLabel {
+	grid-area: year;
+	height: 40px;
+	text-align: right;
+	margin-top: 6px;
+}
+
+.yearLabel p {
+	margin: 0px;
+}
+
+.noItems .yearLabel {
+	color: var(--main-grey);
+}
+
+.dotLabel {
+	grid-area: dot;
+	margin: 0px 20px;
+	position: relative;
+}
+
+.dotLabel:before {
+	content: "";
+    width: 0px;
+    height: 100%;
+    border-left: 1px solid var(--main-grey);
+    position: absolute;
+    left: 20px;
+    z-index: -1;
+}
+
+.littleCircle {
+	fill: var(--accent);
+}
+
+.noItems .dotLabel .littleCircle {
+	fill: var(--main-grey);
+}
+
+.noItems .dotLabel .bigCircle {
+	stroke: var(--main-grey);
+}
+
+.dotLabel .bigCircle {
+	stroke-width: 3;
+	fill: none;
+	stroke: var(--accent);
+}
+
+.fashionLabel {
+	grid-area: fashion;
 	display: grid;
-	grid-template-columns: minmax(90px, 150px) 1fr 1fr;
+	grid-template-columns: 150px 1fr;
 	grid-template-rows: 0fr 1fr;
 	grid-template-areas: 
-	    "image header header"
-	    "image paragraph paragraph";
-	font-size: 90%;
+	    "pic header"
+	    "pic list";
+	margin-bottom: 1.5em;
+	margin-top: 18px;
+	padding-top: 1em;
+	font-size: 80%;
+	line-height: 80%;
+	position: relative;
 }
 
-.timelineSegment p {
-	margin-top: 0px;
-	margin-bottom: 0.25em;
-	grid-area: header;
+.fashionLabel:before {
+	content: "";
+	border-top: 4px solid var(--accent);
+	width: calc(100% + 40px);
+	position: absolute;
+	margin-left: -40px;
 }
 
-.timelineSegment div {
-	grid-area: image;
+.noItems .fashionLabel {
+	display: none;
+}
+
+.fashionLabel div {
+	grid-area: pic;
 	background-size: contain;
 	background-repeat: no-repeat;
+	height: 150px;
 }
 
-.timelineSegment ul {
-	grid-area: paragraph;
-	margin-top: 0px;
-	margin-bottom: 0px;
+.fashionLabel p {
+	grid-area: header;
+	margin: 0px;
+	margin-bottom: 0.25em;
 }
+
+.fashionLabel ul {
+	grid-area: list;
+	margin: 0px;
+	font-size: 1.25rem;
+	display: grid;
+	grid-template-rows: repeat(3, min-content);
+	grid-auto-flow: column;
+	max-width: 400px;
+}
+
 
 .centreLine {
 	stroke: black;
@@ -51,8 +131,25 @@
 	stroke: black;
 }
 
+.timelineHolder {
+	max-width: 70%;
+}
+
+li:first-child {
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 900px) {
+	.timelineHolder {
+		max-width: 90%;
+	    clear: both;
+	}
+}
+
 @media (max-width: 600px) {
-	.fullwidth {
-		max-width: 100%;
+	.timelineHolder {
+		max-width: 250%;
+    	margin-left: -23.5%;
+    	width: 146%;
 	}
 }
