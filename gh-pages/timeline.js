@@ -1,11 +1,33 @@
 class Timeline {
   constructor(holder) {
-  	this.block_height = 200;
-  	const circle_color = "red";
-  	const stroke_width = 4;
-  	this.circle_width = 40;
+  	this.width = d3.select(holder).node().clientWidth;
+  	this.height = 350;
+  	this.margin = {"left": 80, "right": 20, "top": 50, "bottom": 20};
+  	if (this.width < 600){
+  		this.margin = {"left": 10, "right": 0, "top": 50, "bottom": 20};
+  	}
 
-  	this.holder = d3.select(holder);
+  	this.holder = d3.select(holder)
+  		.select("svg")
+  		.attr("width", this.width)
+  		.attr("height", this.height);
+
+  	this.scale_x = d3.scaleLinear([1988, 2015], [this.margin.left, this.width-this.margin.right]);
+  	this.scale_y = d3.scaleLinear([8, 0], [this.margin.top, this.height-this.margin.bottom]);
+
+  	this.axis_y = d3.axisLeft(this.scale_y);
+  	this.axis_x = d3.axisBottom(this.scale_x)
+  		.tickFormat(d3.format(".0f"));
+
+  	this.axis_x_group = this.holder.append("g")
+  		.attr("class", "timelineX")
+	    .attr("transform", `translate(${0},${this.height - this.margin.bottom})`)
+	    .call(this.axis_x);
+
+	this.axis_y_group = this.holder.append("g")
+		.attr("class", "timelineY")
+	    .attr("transform", `translate(${this.margin.left},${0})`)
+	    .call(this.axis_y);
 
   	const images = [
   	"2013_Devastée Womenswear Spring-Summer 2013_da3c48f10d33115e8f44f9bd31194946fd86e6bbcfbf19967bf5990784f7f26e.jpg",
@@ -32,92 +54,32 @@ class Timeline {
 	  	}
 	});
 
-  	this.segments = this.holder.selectAll("div.timelineSegment")
-  		.data(this.images, e => Object.keys(e)[0])
-  		.enter()
-  		.append("div")
-  		.attr("class", "timelineSegment");
-
-  	this.holder.selectAll("div.timelineSegment")
-  		.append("div")
-  		.attr("class", "yearLabel")
-  		.append("p")
-  		.html(d => Object.keys(d)[0]);
-
-  	let circleHolder = this.holder.selectAll("div.timelineSegment")
-  		.append("div")
-  		.attr("class", "dotLabel")
-  		.append("svg")
-  		.attr("width", this.circle_width)
-  		.attr("height", this.circle_width);
-
-  	circleHolder.append("circle")
-  		.attr("class", "bigCircle")
-  		.attr("r", 0)
-  		.attr("cx", this.circle_width/2)
-  		.attr("cy", this.circle_width/2);
-
-  	circleHolder.append("circle")
-  		.attr("class", "littleCircle")
-  		.attr("r", 4)
-  		.attr("cx", this.circle_width/2)
-  		.attr("cy", this.circle_width/2);
-
-  	let fashionLabel = this.holder.selectAll("div.timelineSegment")
-  		.append("div")
-  		.attr("class", "fashionLabel");
-
-  	fashionLabel.append("div");
-
-  	fashionLabel.append("p");
-
-  	fashionLabel.append("ul");
 
   	this.populateTimeline();
   }
 
   populateTimeline(){
+  	const image_height = this.scale_y(0) - this.scale_y(1);
+  	const image_width = this.scale_x(1990) - this.scale_x(1989);
+  	const ratio = 399/445;
+  	const true_width = image_height/ratio;
+  	// const true_height = Math.min(image_width*ratio, image_height);
 
-  	this.holder.selectAll("div.timelineSegment")
-  		.attr("class", function(d){
-  			if (Object.values(d)[0].length < 1){
-  				return "timelineSegment noItems"
-  			} 
-  			return "timelineSegment";
-  		})
-
-  	this.holder.selectAll(".fashionLabel p")
-  		.html(function(d){
-  			const num_items = Object.values(d)[0].length;
-  			if (num_items > 0){
-  				return `Trend appears <strong>${num_items}</strong> time${num_items > 1 ? "s" : ""}`
-  			}
-  			return "";
-  		});
-
-  	this.holder.selectAll(".fashionLabel div")
-  		.style("background-image", function(d){
-  			const num_items = Object.values(d)[0].length;
-  			if (num_items > 0){
-  				return 'url("./assets/' + Object.values(Object.values(d)[0][0])[0] + '")';
-  			}
-  			return null;
-  		})
-
-  	this.holder.selectAll(".fashionLabel ul")
-  		.selectAll("li")
-  		.data(d => Object.entries(this.reduceArray(Object.values(d)[0])))
+  	this.img_group = this.holder.selectAll("g.imageGroup")
+  		.data(Object.values(this.images), d => d[0])
   		.enter()
-  		.append("li")
-  		.html(function(d){
-  			return `${d[0]} ${d[1].length > 1 ? "(x" + d[1].length + ")" : ""}`
+  		.append("g")
+  		.attr("class", "imageGroup")
+  		.attr("transform", d => `translate(${this.scale_x(parseInt(Object.keys(d)[0]))-true_width/2.15},${-image_height})`)
+  		.selectAll("image")
+  		.data(function(d){ return Object.values(d)[0] })
+  		.enter()
+  		.append("image")
+  		.attr("height", image_height)
+  		.attr("href", function(d){
+  			return `./assets/${Object.values(d)[0]}`;
   		})
-
-  	this.holder.selectAll(".bigCircle")
-  		.attr("r", function(d){
-  			const num_items = Object.values(d)[0].length;
-  			return num_items * 3;
-  		})
+  		.attr("transform", (d, i) => `translate(${0},${this.scale_y(i)})`)
 
   }
 
