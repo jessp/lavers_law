@@ -1,6 +1,6 @@
 class Timeline {
   constructor(holder) {
-  	this.block_height = 200;
+  	this.block_height = 250;
   	const circle_color = "red";
   	const stroke_width = 4;
   	this.circle_width = 40;
@@ -44,6 +44,9 @@ class Timeline {
   		.append("p")
   		.html(d => Object.keys(d)[0]);
 
+  	this.holder.selectAll(".yearLabel")
+  		.append("div");
+
   	let circleHolder = this.holder.selectAll("div.timelineSegment")
   		.append("div")
   		.attr("class", "dotLabel")
@@ -66,8 +69,6 @@ class Timeline {
   	let fashionLabel = this.holder.selectAll("div.timelineSegment")
   		.append("div")
   		.attr("class", "fashionLabel");
-
-  	fashionLabel.append("div");
 
   	fashionLabel.append("p");
 
@@ -95,14 +96,6 @@ class Timeline {
   			return "";
   		});
 
-  	this.holder.selectAll(".fashionLabel div")
-  		.style("background-image", function(d){
-  			const num_items = Object.values(d)[0].length;
-  			if (num_items > 0){
-  				return 'url("./assets/' + Object.values(Object.values(d)[0][0])[0] + '")';
-  			}
-  			return null;
-  		})
 
   	this.holder.selectAll(".fashionLabel ul")
   		.selectAll("li")
@@ -117,6 +110,15 @@ class Timeline {
   		.attr("r", function(d){
   			const num_items = Object.values(d)[0].length;
   			return num_items * 3;
+  		})
+
+  	this.holder.selectAll(".yearLabel div")
+  		.style("background-image", function(d){
+  			const num_items = Object.values(d)[0].length;
+  			if (num_items > 0){
+  				return 'url("./assets/' + Object.values(Object.values(d)[0][0])[0] + '")';
+  			}
+  			return null;
   		})
 
   }

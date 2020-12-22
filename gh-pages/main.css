@@ -14,39 +14,59 @@
 .timelineSegment {
 	width: 100%;
 	display: grid;
-	grid-template-columns: 50px 80px auto;
+	grid-template-columns: 90px 60px auto;
 	grid-template-rows: 1fr;
 	grid-template-areas: 
 	    "year dot fashion";
 	margin: 0px;
 	position: relative;
+	padding-bottom: 1em;
+}
+
+.timelineSegment.noItems {
+	padding-bottom: 0em;
+	height: 30px;
 }
 
 .yearLabel {
 	grid-area: year;
-	height: 40px;
-	text-align: right;
+	text-align: center;
 	margin-top: 6px;
+	display: grid;
+	grid-auto-flow: row;
 }
 
 .yearLabel p {
 	margin: 0px;
 }
 
+.yearLabel div {
+	margin: 0px;
+	height: 200px;
+	width: 90px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-x: -50px;
+}
+
 .noItems .yearLabel {
 	color: var(--main-grey);
 }
 
+.noItems .yearLabel div{
+	display: none;
+}
+
 .dotLabel {
 	grid-area: dot;
-	margin: 0px 20px;
+	margin: 0px 0px;
 	position: relative;
 }
 
 .dotLabel:before {
 	content: "";
     width: 0px;
-    height: 100%;
+    height: calc(100% + 20px);
     border-left: 1px solid var(--main-grey);
     position: absolute;
     left: 20px;
@@ -73,15 +93,8 @@
 
 .fashionLabel {
 	grid-area: fashion;
-	display: grid;
-	grid-template-columns: 150px 1fr;
-	grid-template-rows: 0fr 1fr;
-	grid-template-areas: 
-	    "pic header"
-	    "pic list";
 	margin-bottom: 1.5em;
 	margin-top: 18px;
-	padding-top: 1em;
 	font-size: 80%;
 	line-height: 80%;
 	position: relative;
@@ -99,21 +112,13 @@
 	display: none;
 }
 
-.fashionLabel div {
-	grid-area: pic;
-	background-size: contain;
-	background-repeat: no-repeat;
-	height: 150px;
-}
-
 .fashionLabel p {
-	grid-area: header;
 	margin: 0px;
 	margin-bottom: 0.25em;
+	margin-top: 1.25em;
 }
 
 .fashionLabel ul {
-	grid-area: list;
 	margin: 0px;
 	font-size: 1.25rem;
 	display: grid;
