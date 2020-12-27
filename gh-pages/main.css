@@ -1,10 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
 :root {
   --main-grey: #cecece;
-  --accent: red;
+  --accent: #1F64CC;
+  --label-main: 'JetBrains Mono';
+  --label-fallback: monospace;
 }
 
 * {
 	box-sizing: border-box;
+}
+
+.emphasis {
+	font-weight: bold;
+	color: var(--accent);
 }
 
 .timeline {
@@ -34,22 +43,25 @@
 	margin-top: 6px;
 	display: grid;
 	grid-auto-flow: row;
+	font-family: var(--label-fallback);
+	font-family: var(--label-main);
 }
 
 .yearLabel p {
 	margin: 0px;
+	color: var(--accent);
 }
 
 .yearLabel div {
 	margin: 0px;
-	height: 200px;
+	height: 185px;
 	width: 90px;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position-x: -50px;
 }
 
-.noItems .yearLabel {
+.noItems .yearLabel p {
 	color: var(--main-grey);
 }
 
@@ -96,13 +108,12 @@
 	margin-bottom: 1.5em;
 	margin-top: 18px;
 	font-size: 80%;
-	line-height: 80%;
 	position: relative;
 }
 
 .fashionLabel:before {
 	content: "";
-	border-top: 4px solid var(--accent);
+	border-top: 3px solid var(--accent);
 	width: calc(100% + 40px);
 	position: absolute;
 	margin-left: -40px;
@@ -122,11 +133,20 @@
 	margin: 0px;
 	font-size: 1.25rem;
 	display: grid;
-	grid-template-rows: repeat(3, min-content);
+	grid-template-rows: repeat(4, min-content);
 	grid-auto-flow: column;
-	max-width: 400px;
+	max-width: 500px;
+	line-height: 35px;
 }
 
+.fashionLabel ul li img {
+	display: inline-block;
+	height: 35px;
+	width: 20px;
+	object-fit: cover;
+	object-position: -7px;
+	vertical-align: middle;
+}
 
 .centreLine {
 	stroke: black;
@@ -144,6 +164,42 @@ li:first-child {
     margin-top: 0.25rem;
 }
 
+.listOfTrends {
+	width: max-content;
+}
+
+.listOfTrendsContainer {
+	width: 100%;
+	overflow-x: auto;
+	position: relative;
+}
+
+.listOfTrends div {
+	width:75px;
+	height: 100px;
+	display: inline-block;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.selectedTrend {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: minmax(75px, 200px) auto;
+	padding: 2em;
+	margin-top: 2em;
+	margin-left: 3em;
+}
+
+.textTrend {
+	padding-left: 2em;
+}
+
+.selectedTrend img {
+	max-height: 200px;
+}
+
+
 @media (max-width: 900px) {
 	.timelineHolder {
 		max-width: 90%;
@@ -157,4 +213,14 @@ li:first-child {
     	margin-left: -23.5%;
     	width: 146%;
 	}
+
+	.hideOnSmall {
+		display: none;
+	}
+
+	.selectedTrend {
+		padding: 0em;
+		margin-left: -23.5%;
+	}
+
 }
