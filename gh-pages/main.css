@@ -1,11 +1,236 @@
-:root {
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital@0;1&display=swap');
 
+:root {
+  --main-grey: #8e8e8e;
+  --bg: #edecec;
+  --accent: #1F64CC;
+  --label-main: 'IBM Plex Mono';
+  --label-fallback: monospace;
+}
+
+body {
+	font-family: 'IBM Plex Sans', sans-serif;
+	background-color: var(--bg);
 }
 
 * {
 	box-sizing: border-box;
 }
 
+.emphasis {
+	font-weight: bold;
+	color: var(--accent);
+}
+
+.timeline {
+	position: relative;
+}
+
+.timelineSegment {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 80px 60px auto;
+	grid-template-rows: 1fr;
+	grid-template-areas: 
+	    "year dot fashion";
+	margin: 0px;
+	position: relative;
+	height: 225px;
+	transition: height 1s;
+	animation: style-appear 1s ease;
+}
+
+.timelineSegment.toRemove {
+	animation: style-remove 1s ease;
+}
+
+.timelineSegment.noItems {
+	height: 30px;
+	transition: height 1s;
+}
+
+.yearLabel {
+	grid-area: year;
+	text-align: center;
+	margin-top: 6px;
+	display: grid;
+	grid-auto-flow: row;
+	font-family: var(--label-fallback);
+	font-family: var(--label-main);
+}
+
+.yearLabel p {
+	margin: 0px;
+	color: var(--accent);
+}
+
+.yearLabel div {
+	margin: 0px;
+	height: 185px;
+	width: 80px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-x: -50px;
+}
+
+.noItems .yearLabel p {
+	color: var(--main-grey);
+}
+
+.noItems .yearLabel div{
+	display: none;
+}
+
+.dotLabel {
+	grid-area: dot;
+	margin: 0px 0px;
+	position: relative;
+}
+
+.dotLabel:before {
+	content: "";
+    width: 0px;
+    height: calc(100% + 20px);
+    border-left: 1px solid var(--main-grey);
+    position: absolute;
+    left: 20px;
+    z-index: -1;
+}
+
+.littleCircle {
+	fill: var(--accent);
+}
+
+.noItems .dotLabel .littleCircle {
+	fill: var(--main-grey);
+}
+
+.noItems .dotLabel .bigCircle {
+	stroke: var(--main-grey);
+}
+
+.dotLabel .bigCircle {
+	stroke-width: 3;
+	fill: none;
+	stroke: var(--accent);
+}
+
+.fashionLabel {
+	grid-area: fashion;
+	margin-bottom: 1.5em;
+	margin-top: 18px;
+	font-size: 80%;
+	position: relative;
+}
+
+.fashionLabel:before {
+	content: "";
+	border-top: 3px solid var(--accent);
+	width: calc(100% + 40px);
+	position: absolute;
+	margin-left: -40px;
+}
+
+.noItems .fashionLabel {
+	display: none;
+}
+
+.fashionLabel p {
+	margin: 0px;
+	margin-bottom: 0.25em;
+	margin-top: 1.25em;
+}
+
+.fashionLabel ul {
+	margin: 0px;
+	font-size: 1.25rem;
+	max-width: 500px;
+	line-height: 25px;
+}
+
+.fashionLabel ul li img {
+	display: inline-block;
+	height: 35px;
+	width: 20px;
+	object-fit: cover;
+	object-position: -7px;
+	vertical-align: middle;
+}
+
+.centreLine {
+	stroke: black;
+}
+
+.dashLine line:not(.timeLineDash) {
+	stroke: black;
+}
+
+.timelineHolder {
+	max-width: 70%;
+}
+
+li:first-child {
+    margin-top: 0.25rem;
+}
+
+.listOfTrends {
+	width: max-content;
+}
+
+.listOfTrendsContainer {
+	width: 100%;
+	overflow-x: auto;
+	position: -webkit-sticky;
+	position: sticky;
+	padding-top: 10px;
+	top: 0px;
+	background-color: var(--bg);
+	z-index: 3;
+}
+
+.listOfTrends div {
+	width:75px;
+	height: 100px;
+	display: inline-block;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.selectedTrend {
+	padding: 2em;
+	margin-top: 2em;
+	margin-left: 3em;
+}
+
+.textTrend {
+	padding-left: 2em;
+}
+
+
+@keyframes style-appear {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        opacity: 1;
+        height: 220px;
+    }
+}
+
+@keyframes style-remove {
+	0% {
+        opacity: 1;
+        height: 220px;
+    }
+    50% {
+    	opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        height: 0px;
+    }
+}
 
 @media (max-width: 900px) {
 	.timelineHolder {
@@ -21,7 +246,13 @@
     	width: 146%;
 	}
 
-	.timelineY {
+	.hideOnSmall {
 		display: none;
 	}
+
+	.selectedTrend {
+		padding: 0em;
+		margin-left: -23.5%;
+	}
+
 }

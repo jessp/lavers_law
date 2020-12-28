@@ -1,85 +1,132 @@
 class Timeline {
-  constructor(holder) {
-  	this.width = d3.select(holder).node().clientWidth;
-  	this.height = 350;
-  	this.margin = {"left": 80, "right": 20, "top": 50, "bottom": 20};
-  	if (this.width < 600){
-  		this.margin = {"left": 10, "right": 0, "top": 50, "bottom": 20};
-  	}
+  constructor(timelineHolder, list_holder, data, selected_cluster) {
+  	this.circle_width = 40;
 
-  	this.holder = d3.select(holder)
-  		.select("svg")
-  		.attr("width", this.width)
-  		.attr("height", this.height);
+  	this.holder = d3.select(timelineHolder);
+  	this.list_holder = d3.select(list_holder);
+  	this.data = data;
+  	this.selected_cluster = selected_cluster;
+  	this.images = this.data[this.selected_cluster];
 
-  	this.scale_x = d3.scaleLinear([1988, 2015], [this.margin.left, this.width-this.margin.right]);
-  	this.scale_y = d3.scaleLinear([8, 0], [this.margin.top, this.height-this.margin.bottom]);
-
-  	this.axis_y = d3.axisLeft(this.scale_y);
-  	this.axis_x = d3.axisBottom(this.scale_x)
-  		.tickFormat(d3.format(".0f"));
-
-  	this.axis_x_group = this.holder.append("g")
-  		.attr("class", "timelineX")
-	    .attr("transform", `translate(${0},${this.height - this.margin.bottom})`)
-	    .call(this.axis_x);
-
-	this.axis_y_group = this.holder.append("g")
-		.attr("class", "timelineY")
-	    .attr("transform", `translate(${this.margin.left},${0})`)
-	    .call(this.axis_y);
-
-  	const images = [
-  	"2013_Devastée Womenswear Spring-Summer 2013_da3c48f10d33115e8f44f9bd31194946fd86e6bbcfbf19967bf5990784f7f26e.jpg",
-  	"2013_Sass & Bide_f61d01ecf6d386fe6e7084875e80d95098eb43fd42bcb7672ffc8deda031d530.jpg",
-  	"2014_Bastian Visch KABK - Den Haag 2014_d425d3cf87a69c0fcff656b72bca534da624c95aa705a2afcd8d6675be859360.jpg"
-  	];
-  	const year_array = Array.from({length: 2015-1989}, (_, i) => i + 1989);
-  	const possible_designers = 
-  		["Acne Studios", "Alexander Wang", "Chanel",
-  		"Versace", "Gucci", "Prada"];
-
-  	this.images = year_array.map(function(e){
-  		const num_images = Math.random() > 0.3 ? new Array(Math.floor(Math.random() * possible_designers.length)) : [];
-	  	let img_array = [];
-	  	for (let i = 0; i < num_images.length; i++){
-	  		let temp_designer = possible_designers[Math.floor(Math.random() * possible_designers.length)];
-	  		let temp_img = images[Math.floor(Math.random() * images.length)];
-	  		img_array.push(
-	  			{[temp_designer]: temp_img}
-	  		);
-	  	}
-	  	return {
-	  		[e]:img_array
-	  	}
-	});
-
-
+  	this.populateTrendList();
   	this.populateTimeline();
   }
 
-  populateTimeline(){
-  	const image_height = this.scale_y(0) - this.scale_y(1);
-  	const image_width = this.scale_x(1990) - this.scale_x(1989);
-  	const ratio = 399/445;
-  	const true_width = image_height/ratio;
-  	// const true_height = Math.min(image_width*ratio, image_height);
-
-  	this.img_group = this.holder.selectAll("g.imageGroup")
-  		.data(Object.values(this.images), d => d[0])
+  populateTrendList(){
+  	const trend_images = Object.entries(this.data).map(e => [e[0], Object.values(e[1].find(f => f[1].length > 0)[1][0])[0]]);
+  	this.list_holder.selectAll("div")
+  		.data(trend_images, d => d[0])
   		.enter()
-  		.append("g")
-  		.attr("class", "imageGroup")
-  		.attr("transform", d => `translate(${this.scale_x(parseInt(Object.keys(d)[0]))-true_width/2.15},${-image_height})`)
-  		.selectAll("image")
-  		.data(function(d){ return Object.values(d)[0] })
-  		.enter()
-  		.append("image")
-  		.attr("height", image_height)
-  		.attr("href", function(d){
-  			return `./assets/${Object.values(d)[0]}`;
+  		.append("div")
+  		.style("background-image", function(d){
+  			return `url('./assets/out_md/${d[1].substring(0, d[1].length - 3)}png')`;
   		})
-  		.attr("transform", (d, i) => `translate(${0},${this.scale_y(i)})`)
+  		.on("click", (e, d) => {
+  			this.selected_cluster = d[0];
+  			this.images = this.data[this.selected_cluster];
+  			this.populateTimeline();
+  		});
+  }
+
+  populateTimeline(){
+  	const circle_width = this.circle_width;
+
+  	this.segments = this.holder.selectAll("div.timelineSegment")
+  		.data(this.images, d => d[0])
+  		.join(
+        	enter => enter.append("div"),
+        	update => update,
+        	exit => exit
+            	.attr("class", "timelineSegment toRemove")
+          		.call(exit => exit.transition().delay(750)
+            	.remove())
+        )
+  		.attr("class", "timelineSegment")
+  		.each(function(d){
+  			let that = d3.select(this);
+
+  			if (that.select(".yearLabel").node() === null){
+  				let yearLabel = that.append("div")
+  					.attr("class", "yearLabel");
+  			
+	  			yearLabel
+			  		.append("p")
+			  		.html(d[0]);
+
+			  	yearLabel
+			  		.append("div");
+
+				let circleHolder = that
+			  		.append("div")
+			  		.attr("class", "dotLabel")
+			  		.append("svg");
+
+			  	circleHolder.append("circle")
+			  		.attr("class", "bigCircle")
+			  		.attr("cx", circle_width/2)
+			  		.attr("cy", circle_width/2)
+			  		.attr("r", 0);
+
+			  	circleHolder.append("circle")
+			  		.attr("class", "littleCircle")
+			  		.attr("cx", circle_width/2)
+			  		.attr("cy", circle_width/2)
+			  		.attr("r", 4);
+
+			  	let fashion_label = that
+			  		.append("div")
+			  		.attr("class", "fashionLabel");
+
+			  	fashion_label.append("p");
+
+			  	fashion_label.append("ul");
+  			}
+  		});
+
+
+  	this.segments
+  		.attr("class", function(d){
+  			if (d[1].length < 1){
+  				return "timelineSegment noItems"
+  			} 
+  			return "timelineSegment";
+  		})
+
+  	this.segments.select(".fashionLabel p")
+  		.html(function(d){
+  			const num_items = d[1].length;
+  			const year = d[0];
+  			if (num_items > 0){
+  				return `Trend appears <span class='emphasis'>${num_items} time${num_items > 1 ? "s" : ""}</span class='emphasis'><span class='emphasis hideOnSmall'> in ${year}</span>, in the following shows:`
+  			}
+  			return "";
+  		});
+
+  	this.segments.select(".fashionLabel ul")
+  		.selectAll("li")
+  		.data(d => Object.entries(this.reduceArray(d[1])))
+  		.join("li")
+  		.html(function(d){
+  			const image_html = d[1].map(e => `<img src='./assets/out_sm/${e.substring(0, e.length - 3)}png'>`).join("");
+  			return `${d[0]} (${image_html})`
+  		})
+
+  	this.segments.select(".bigCircle")
+  		.transition().duration(500)
+  		.attr("r", function(d){
+  			const num_items = d[1].length;
+  			return num_items * 3;
+  		})
+
+  	this.segments.select(".yearLabel div")
+  		.style("background-image", function(d){
+  			const num_items = d[1].length;
+  			if (num_items > 0){
+  				let name = Object.values(d[1][0])[0];
+  				return `url('./assets/out_md/${name.substring(0, name.length - 3)}png')`;
+  			}
+  			return null;
+  		})
 
   }
 
