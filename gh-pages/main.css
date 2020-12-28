@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital@0;1&display=swap');
 
 :root {
-  --main-grey: #cecece;
+  --main-grey: #8e8e8e;
+  --bg: #edecec;
   --accent: #1F64CC;
-  --label-main: 'JetBrains Mono';
+  --label-main: 'IBM Plex Mono';
   --label-fallback: monospace;
+}
+
+body {
+	font-family: 'IBM Plex Sans', sans-serif;
+	background-color: var(--bg);
 }
 
 * {
@@ -23,7 +29,7 @@
 .timelineSegment {
 	width: 100%;
 	display: grid;
-	grid-template-columns: 90px 60px auto;
+	grid-template-columns: 80px 60px auto;
 	grid-template-rows: 1fr;
 	grid-template-areas: 
 	    "year dot fashion";
@@ -55,7 +61,7 @@
 .yearLabel div {
 	margin: 0px;
 	height: 185px;
-	width: 90px;
+	width: 80px;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position-x: -50px;
@@ -132,11 +138,8 @@
 .fashionLabel ul {
 	margin: 0px;
 	font-size: 1.25rem;
-	display: grid;
-	grid-template-rows: repeat(4, min-content);
-	grid-auto-flow: column;
 	max-width: 500px;
-	line-height: 35px;
+	line-height: 25px;
 }
 
 .fashionLabel ul li img {
@@ -175,7 +178,7 @@ li:first-child {
 	position: sticky;
 	padding-top: 10px;
 	top: 0px;
-	background-color: #fffff8;
+	background-color: var(--bg);
 	z-index: 3;
 }
 
