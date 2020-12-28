@@ -15,48 +15,6 @@ class Timeline {
   	this.temp_images = images;
   	this.images = this.data[this.selected_cluster];
 
-  	this.segments = this.holder.selectAll("div.timelineSegment")
-  		.data(this.images, d => d[0])
-  		.enter()
-  		.append("div")
-  		.attr("class", "timelineSegment");
-
-  	this.segments
-  		.append("div")
-  		.attr("class", "yearLabel")
-  		.append("p")
-  		.html(d => d[0]);
-
-  	this.segments.selectAll(".yearLabel")
-  		.append("div");
-
-  	let circleHolder = this.segments
-  		.append("div")
-  		.attr("class", "dotLabel")
-  		.append("svg")
-  		.attr("width", this.circle_width)
-  		.attr("height", this.circle_width);
-
-  	circleHolder.append("circle")
-  		.attr("class", "bigCircle")
-  		.attr("r", 0)
-  		.attr("cx", this.circle_width/2)
-  		.attr("cy", this.circle_width/2);
-
-  	circleHolder.append("circle")
-  		.attr("class", "littleCircle")
-  		.attr("r", 4)
-  		.attr("cx", this.circle_width/2)
-  		.attr("cy", this.circle_width/2);
-
-  	let fashion_label = this.segments
-  		.append("div")
-  		.attr("class", "fashionLabel");
-
-  	fashion_label.append("p");
-
-  	fashion_label.append("ul");
-
   	this.populateTrendList();
   	this.populateTimeline();
   }
@@ -73,17 +31,58 @@ class Timeline {
   		.on("click", (e, d) => {
   			this.selected_cluster = d[0];
   			this.images = this.data[this.selected_cluster];
-  			d3.select(".imTrend")
-  				.attr("src", `./assets/out_md/${d[1].substring(0, d[1].length - 3)}png`);
   			this.populateTimeline();
   		});
   }
 
   populateTimeline(){
+  	const circle_width = this.circle_width;
 
-  	this.segments
+  	this.segments = this.holder.selectAll("div.timelineSegment")
   		.data(this.images, d => d[0])
-  		.enter()
+  		.join("div")
+  		.attr("class", "timelineSegment")
+  		.each(function(d){
+  			let that = d3.select(this);
+
+  			if (that.select(".yearLabel").node() === null){
+  				let yearLabel = that.append("div")
+  					.attr("class", "yearLabel");
+  			
+	  			yearLabel
+			  		.append("p")
+			  		.html(d[0]);
+
+			  	yearLabel
+			  		.append("div");
+
+				let circleHolder = that
+			  		.append("div")
+			  		.attr("class", "dotLabel")
+			  		.append("svg");
+
+			  	circleHolder.append("circle")
+			  		.attr("class", "bigCircle")
+			  		.attr("cx", circle_width/2)
+			  		.attr("cy", circle_width/2)
+			  		.attr("r", 0);
+
+			  	circleHolder.append("circle")
+			  		.attr("class", "littleCircle")
+			  		.attr("cx", circle_width/2)
+			  		.attr("cy", circle_width/2)
+			  		.attr("r", 4);
+
+			  	let fashion_label = that
+			  		.append("div")
+			  		.attr("class", "fashionLabel");
+
+			  	fashion_label.append("p");
+
+			  	fashion_label.append("ul");
+  			}
+  		});
+
 
   	this.segments
   		.attr("class", function(d){
@@ -113,6 +112,7 @@ class Timeline {
   		})
 
   	this.segments.select(".bigCircle")
+  		.transition().duration(500)
   		.attr("r", function(d){
   			const num_items = d[1].length;
   			return num_items * 3;

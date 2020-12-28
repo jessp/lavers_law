@@ -14,11 +14,13 @@ document.onreadystatechange = () => {
 	  		file_name: d.file_name.replace("&", "_")
 	  	};
 	}).then(function(data) {
-		const year_array = Array.from({length: 2015-1991}, (_, i) => i + 1991).map(d => [d, []]);
 		let formatted = 
 			Object.assign(...Array.from(d3.group(data, d => d.cluster, d => d.year), 
 				function([key, value]){
 					const array_vals = Array.from(value);
+					const min_year = Math.min(...array_vals.map(e => e[0]));
+					const max_year = Math.max(...array_vals.map(e => e[0]));
+					const year_array = Array.from({length: max_year + 1 - min_year}, (_, i) => i + min_year).map(d => [d, []]);
 					let new_obj = {};
 					let year_obj = year_array.map(function(e){
 						let found_item = array_vals.find(f => f[0] === e[0]);

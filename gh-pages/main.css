@@ -171,7 +171,12 @@ li:first-child {
 .listOfTrendsContainer {
 	width: 100%;
 	overflow-x: auto;
-	position: relative;
+	position: -webkit-sticky;
+	position: sticky;
+	padding-top: 10px;
+	top: 0px;
+	background-color: #fffff8;
+	z-index: 3;
 }
 
 .listOfTrends div {
@@ -183,9 +188,6 @@ li:first-child {
 }
 
 .selectedTrend {
-	display: grid;
-	grid-auto-flow: column;
-	grid-template-columns: minmax(75px, 200px) auto;
 	padding: 2em;
 	margin-top: 2em;
 	margin-left: 3em;
@@ -193,10 +195,6 @@ li:first-child {
 
 .textTrend {
 	padding-left: 2em;
-}
-
-.selectedTrend img {
-	max-height: 200px;
 }
 
 
