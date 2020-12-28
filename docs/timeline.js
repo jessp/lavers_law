@@ -16,14 +16,15 @@ class Timeline {
   	const trend_images = Object.entries(this.data).map(e => [e[0], Object.values(e[1].find(f => f[1].length > 0)[1][0])[0]]);
   	this.list_holder.selectAll("div")
   		.data(trend_images, d => d[0])
-  		.enter()
-  		.append("div")
+  		.join("div")
+      .attr("class", d => d[0] === this.selected_cluster ? "selected" : "")
   		.style("background-image", function(d){
   			return `url('./assets/out_md/${d[1].substring(0, d[1].length - 3)}png')`;
   		})
   		.on("click", (e, d) => {
   			this.selected_cluster = d[0];
   			this.images = this.data[this.selected_cluster];
+        this.populateTrendList();
   			this.populateTimeline();
   		});
   }

@@ -173,27 +173,45 @@ li:first-child {
     margin-top: 0.25rem;
 }
 
+.listOfTrendsContainer {
+	width: 100vw;
+	position: -webkit-sticky;
+	position: sticky;
+	top: -1px;
+	background-color: var(--bg);
+	z-index: 3;
+	margin-left: -25%;
+}
+
+.listOfTrendsContainer h2 {
+	display: block;
+	padding-left: 12.5%;
+	width: 87.5%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.trendScroller {
+	width: 100%;
+	overflow-x: auto;
+}
+
 .listOfTrends {
 	width: max-content;
 }
 
-.listOfTrendsContainer {
-	width: 100%;
-	overflow-x: auto;
-	position: -webkit-sticky;
-	position: sticky;
-	padding-top: 10px;
-	top: 0px;
-	background-color: var(--bg);
-	z-index: 3;
-}
-
 .listOfTrends div {
+	cursor: pointer;
 	width:75px;
 	height: 100px;
 	display: inline-block;
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position-x: -12px;
+}
+
+.trendScroller div.selected {
+	background-color: var(--accent);
 }
 
 .selectedTrend {
@@ -214,14 +232,14 @@ li:first-child {
     }
     100% {
         opacity: 1;
-        height: 220px;
+        height: 225px;
     }
 }
 
 @keyframes style-remove {
 	0% {
         opacity: 1;
-        height: 220px;
+        height: 225px;
     }
     50% {
     	opacity: 0;
@@ -239,11 +257,20 @@ li:first-child {
 	}
 }
 
+@media (max-width: 760px) {
+	.listOfTrendsContainer h2 {
+		width: 84%;
+        padding-left: 8%;
+        padding-right: 8%;
+	}
+}
+
 @media (max-width: 600px) {
 	.timelineHolder {
-		max-width: 250%;
-    	margin-left: -23.5%;
-    	width: 146%;
+		max-width: 100vw;
+    	margin-left: -25%;
+    	width: 100vw;
+    	overflow: hidden;
 	}
 
 	.hideOnSmall {
@@ -254,5 +281,15 @@ li:first-child {
 		padding: 0em;
 		margin-left: -23.5%;
 	}
+
+	.timeline p, .timeline ul {
+		font-size: 1.25em;
+    	line-height: 1.75em;
+	}
+
+	.fashionLabel ul {
+		line-height: 25px;
+	}
+
 
 }
