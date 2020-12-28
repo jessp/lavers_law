@@ -35,12 +35,18 @@ body {
 	    "year dot fashion";
 	margin: 0px;
 	position: relative;
-	padding-bottom: 1em;
+	height: 220px;
+	transition: height 1s;
+	animation: style-appear 1s ease;
+}
+
+.timelineSegment.toRemove {
+	animation: style-remove 1s ease;
 }
 
 .timelineSegment.noItems {
-	padding-bottom: 0em;
 	height: 30px;
+	transition: height 1s;
 }
 
 .yearLabel {
@@ -200,6 +206,31 @@ li:first-child {
 	padding-left: 2em;
 }
 
+
+@keyframes style-appear {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        opacity: 1;
+        height: 220px;
+    }
+}
+
+@keyframes style-remove {
+	0% {
+        opacity: 1;
+        height: 220px;
+    }
+    50% {
+    	opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        height: 0px;
+    }
+}
 
 @media (max-width: 900px) {
 	.timelineHolder {

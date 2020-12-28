@@ -40,7 +40,14 @@ class Timeline {
 
   	this.segments = this.holder.selectAll("div.timelineSegment")
   		.data(this.images, d => d[0])
-  		.join("div")
+  		.join(
+        	enter => enter.append("div"),
+        	update => update,
+        	exit => exit
+            	.attr("class", "timelineSegment toRemove")
+          		.call(exit => exit.transition().delay(750)
+            	.remove())
+        )
   		.attr("class", "timelineSegment")
   		.each(function(d){
   			let that = d3.select(this);
@@ -127,8 +134,6 @@ class Timeline {
   			}
   			return null;
   		})
-
-  	this.segments.exit();
 
   }
 
