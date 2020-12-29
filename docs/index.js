@@ -11,7 +11,7 @@ document.onreadystatechange = () => {
 	  		year: parseInt(d.year),
 	  		designer: des_name.trim(),
 	  		cluster: parseInt(d.cluster),
-	  		file_name: d.file_name.replace(/[&']/g, "_")
+	  		file_name: d.file_name.replace(/[&'éç]/g, "_")
 	  	};
 	}).then(function(data) {
 		let formatted = 
@@ -29,7 +29,7 @@ document.onreadystatechange = () => {
 					new_obj[key] = year_obj;
 					return new_obj;
 				}));	
-		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "373");
+		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "26");
 	});
 
   }
