@@ -20,9 +20,11 @@ class Timeline {
 
   	const trend_images = 
       Object.entries(this.data)
-        .map(e => [e[0], Object.values(e[1].find(f => f[1].length > 0)[1][0])[0]])
+        .map(e => [e[0], Object.values(Object.values(e[1]
+            .filter(f => f[1].length > 0))[2][1][0])[0]])
         .sort((a, b) => descriptions["" + a[0]]["order"] - descriptions["" + b[0]]["order"]);
-  	this.list_holder.selectAll("div")
+
+    this.list_holder.selectAll("div")
   		.data(trend_images, d => d[0])
   		.join("div")
       .attr("class", d => d[0] === this.selected_cluster ? "selected" : "")

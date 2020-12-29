@@ -106,6 +106,7 @@ body {
     position: absolute;
     left: 20px;
     z-index: -1;
+    margin-top: 20px;
 }
 
 .littleCircle {
@@ -136,13 +137,18 @@ body {
 
 .fashionLabel:before {
 	content: "";
-	border-top: 3px solid var(--accent);
-	width: calc(100% + 40px);
-	position: absolute;
-	margin-left: -40px;
+    border-top: 2px solid var(--accent);
+    width: calc(100% + 60px);
+    position: absolute;
+    margin-left: -60px;
+    margin-top: 1px;
 }
 
-.noItems .fashionLabel {
+.noItems .fashionLabel:before {
+    border-top: 1px solid var(--main-grey);
+}
+
+.noItems .fashionLabel p, .noItems .fashionLabel ul {
 	display: none;
 }
 
@@ -209,11 +215,18 @@ li:first-child {
 .listOfTrends div {
 	cursor: pointer;
 	width:75px;
-	height: 100px;
+	height: 110px;
 	display: inline-block;
-	background-size: cover;
+	background-size: 90px 100px;
 	background-repeat: no-repeat;
 	background-position-x: -12px;
+	background-position-y: 5px;
+}
+
+.listOfTrends div:hover {
+	background-size: 99px 110px;
+	background-position-y: 0px;
+	background-position-x: -16px;
 }
 
 .trendScroller div.selected {
@@ -221,9 +234,7 @@ li:first-child {
 }
 
 .selectedTrend {
-	padding: 2em;
 	margin-top: 2em;
-	margin-left: 3em;
 }
 
 .textTrend {
