@@ -7,7 +7,7 @@
   --label-main: 'IBM Plex Mono';
   --label-fallback: monospace;
   --small-size: 30px;
-  --large-size: 225px;
+  --large-size: 400px;
 }
 
 body {
@@ -37,7 +37,7 @@ body {
 	    "year dot fashion";
 	margin: 0px;
 	position: relative;
-	min-height: var(--large-size);
+	max-height: var(--large-size);
 	transition: height 1s;
 	animation: style-appear 1s ease;
 }
@@ -51,7 +51,7 @@ body {
 }
 
 .timelineSegment.noItems {
-	min-height: var(--small-size);
+	max-height: var(--small-size);
 	transition: height 1s;
 	animation: style-appear-var 1s ease;
 }
@@ -205,7 +205,7 @@ li:first-child {
 
 .trendScroller {
 	width: 100%;
-	overflow-x: auto;
+	overflow-x: scroll;
 }
 
 .listOfTrends {
@@ -245,54 +245,50 @@ li:first-child {
 @keyframes style-appear {
     0% {
         opacity: 0;
-        min-height: 0px;
+        max-height: 0px;
     }
     100% {
         opacity: 1;
-        min-height: var(--large-size);
+        max-height: var(--large-size);
     }
 }
 
 @keyframes style-appear-var {
     0% {
         opacity: 0;
-        min-height: 0px;
+        max-height: 0px;
     }
     100% {
         opacity: 1;
-        min-height: var(--small-size);
+        max-height: var(--small-size);
     }
 }
 
 @keyframes style-remove {
 	0% {
         opacity: 1;
-        min-height: var(--large-size);
-        height: var(--large-size);
+        max-height: var(--large-size);
     }
     50% {
     	opacity: 0;
     }
     100% {
         opacity: 0;
-        min-height: 0px;
-        height: 0px;
+        max-height: 0px;
     }
 }
 
 @keyframes style-remove-var {
 	0% {
         opacity: 1;
-        min-height: var(--small-size);
-        height: var(--small-size);
+        max-height: var(--small-size);
     }
     50% {
     	opacity: 0;
     }
     100% {
         opacity: 0;
-        min-height: 0px;
-       	height: 0px;
+        max-height: 0px;
     }
 }
 
