@@ -47,6 +47,7 @@ body {
 .timelineSegment.noItems {
 	height: 30px;
 	transition: height 1s;
+	animation: style-appear-var 1s ease;
 }
 
 .yearLabel {
@@ -174,6 +175,8 @@ li:first-child {
 }
 
 .listOfTrendsContainer {
+	padding-top: 1em;
+	padding-bottom: 1em;
 	width: 100vw;
 	position: -webkit-sticky;
 	position: sticky;
@@ -181,14 +184,7 @@ li:first-child {
 	background-color: var(--bg);
 	z-index: 3;
 	margin-left: -25%;
-}
-
-.listOfTrendsContainer h2 {
-	display: block;
-	padding-left: 12.5%;
-	width: 87.5%;
-    margin-left: auto;
-    margin-right: auto;
+	border-bottom: 1px solid var(--main-grey);
 }
 
 .trendScroller {
@@ -236,6 +232,17 @@ li:first-child {
     }
 }
 
+@keyframes style-appear-vat {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        opacity: 1;
+        height: 30px;
+    }
+}
+
 @keyframes style-remove {
 	0% {
         opacity: 1;
@@ -254,14 +261,6 @@ li:first-child {
 	.timelineHolder {
 		max-width: 90%;
 	    clear: both;
-	}
-}
-
-@media (max-width: 760px) {
-	.listOfTrendsContainer h2 {
-		width: 84%;
-        padding-left: 8%;
-        padding-right: 8%;
 	}
 }
 
