@@ -370,10 +370,16 @@ li:first-child {
 		margin-left: -25%;
     	width: 100vw;
     	overflow: hidden;
+    	grid-template-columns: 150px minmax(50px, 100%);
 	}
 
 	.selectedTrend h3{
 		margin-left: 10px;
+	}
+
+	.imTrend {
+		background-position-x: -30px;
+		height: 220px;
 	}
 
 	.timeline p, .timeline ul {
