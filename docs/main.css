@@ -242,7 +242,7 @@ li:first-child {
 	width: 55%;
 	position: relative;
 	overflow: hidden;
-	height: calc(245px + 1.4em + 0.5rem);
+	min-height: calc(245px + 1.4em + 0.5rem);
 
 }
 
@@ -390,6 +390,21 @@ li:first-child {
 	.fashionLabel ul {
 		line-height: 25px;
 	}
+}
 
+@media (max-width: 450px) {
+	.selectedTrend {
+    	grid-template-columns: 125px minmax(50px, 100%);
+	}
 
+	.selectedTrend h3{
+		margin-left: 10px;
+	}
+
+	.imTrend {
+		height: 100%;
+		background-size: 180px 200px;
+		background-position-y: 50%;
+		background-position-x: -35px;
+	}
 }

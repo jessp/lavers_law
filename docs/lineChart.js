@@ -3,7 +3,7 @@ class LineChart {
 
   constructor(holder) {
   	this.holder = d3.select(holder);
-    this.margin = {"left": 50, "right": 15, "top": 5, "bottom": 25};
+    this.margin = {"left": 15, "right": 15, "top": 5, "bottom": 25};
     this.scale_x = d3.scaleLinear();
     this.scale_y = d3.scaleLinear();
 
