@@ -29,7 +29,9 @@ document.onreadystatechange = () => {
 					new_obj[key] = year_obj;
 					return new_obj;
 				}));	
-		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "26");
+
+		const trendLine = new LineChart(".selectedTrend .chart svg", formatted);
+		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "26", e => trendLine.updateData(e));
 	});
 
   }

@@ -1,6 +1,6 @@
 class Timeline {
 
-  constructor(timelineHolder, list_holder, data, selected_cluster) {
+  constructor(timelineHolder, list_holder, data, selected_cluster, callback) {
   	this.circle_width = 40;
 
   	this.holder = d3.select(timelineHolder);
@@ -8,6 +8,7 @@ class Timeline {
   	this.data = data;
   	this.selected_cluster = selected_cluster;
   	this.images = this.data[this.selected_cluster];
+    this.callback = callback;
 
   	this.populateTrendList();
   	this.populateTimeline();
@@ -15,14 +16,20 @@ class Timeline {
 
   populateTrendList(){
     const cluster_text = descriptions["" + this.selected_cluster] || {"name": "", "description": "", "order": 0};
-    d3.select(".textTrend").select("h3").html(cluster_text["name"]);
-    d3.select(".textTrend").select("p").html(cluster_text["description"]);
-
-  	const trend_images = 
+    const trend_images = 
       Object.entries(this.data)
         .map(e => [e[0], Object.values(Object.values(e[1]
             .filter(f => f[1].length > 0))[2][1][0])[0]])
         .sort((a, b) => descriptions["" + a[0]]["order"] - descriptions["" + b[0]]["order"]);
+
+    const this_image = trend_images.find(e => e[0] === "" + this.selected_cluster);
+    
+    d3.select(".selectedTrend").select("h3").html(cluster_text["name"]);
+    d3.select(".textTrend").select("p").html(cluster_text["description"]);
+    d3.select(".imTrend")
+      .style("background-image", `url('./assets/out_md/${this_image[1].substring(0, this_image[1].length - 3)}png')`);
+    
+    this.callback(this.data["" + this.selected_cluster]);
 
     this.list_holder.selectAll("div")
   		.data(trend_images, d => d[0])

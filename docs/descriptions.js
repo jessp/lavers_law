@@ -21,7 +21,7 @@ const descriptions = {
 	},
 	"483" : {
 	name: "Boxy Casual Outfits",
-	description: "For once, a menswear trend group dominated by outfits where the trousers and blazers don't match. There are still trousers and blazers, though.",
+	description: "For once, a menswear trend group dominated by outfits where the trousers and blazers don't match.",
 	order: 4
 	},
 	"511" : {
@@ -106,7 +106,7 @@ const descriptions = {
 	},
 	"310" : {
 	name: "Spacy Informal Menswear",
-	description: "This herd of men in white and light grey sweaters and chinos are ready for a night on the town. Away from any dark liquids, anyways.",
+	description: "This herd of men in white and light grey sweaters and chinos are ready for a night on the town away from any dark liquids.",
 	order: 21
 	},
 	"74" : {
@@ -161,7 +161,7 @@ const descriptions = {
 	},
 	"43" : {
 	name: "Bright, Short With Texture",
-	description: "Looser fitting dresses landing well above the knee. Ruffles, patterns and embellishments distract you from thinking anything too impure.",
+	description: "Looser fitting dresses landing above the knee. Ruffles and embellishments distract you from thinking anything impure.",
 	order: 32
 	},
 	"886" : {

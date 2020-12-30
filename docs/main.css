@@ -4,6 +4,7 @@
   --main-grey: #8e8e8e;
   --bg: #edecec;
   --accent: #1F64CC;
+  --accent-transparent: #1F64CC66;
   --label-main: 'IBM Plex Mono';
   --label-fallback: monospace;
   --small-size: 30px;
@@ -131,7 +132,7 @@ body {
 	grid-area: fashion;
 	margin-bottom: 1.5em;
 	margin-top: 18px;
-	font-size: 80%;
+	font-size: 90%;
 	position: relative;
 }
 
@@ -182,10 +183,6 @@ body {
 	stroke: black;
 }
 
-.timelineHolder {
-	max-width: 70%;
-}
-
 li:first-child {
     margin-top: 0.25rem;
 }
@@ -230,15 +227,68 @@ li:first-child {
 }
 
 .trendScroller div.selected {
-	background-color: var(--accent);
+	background-color: var(--accent-transparent);
 }
 
 .selectedTrend {
 	margin-top: 2em;
+	margin-bottom: 2em;
+	display: grid;
+	grid-template-columns: 190px minmax(50px, 100%);
+	grid-template-areas: 
+    "sel-header sel-header"
+    "sel-img sel-para";
+	grid-template-rows: auto auto;
+	width: 55%;
+	position: relative;
+	overflow: hidden;
+	height: calc(245px + 1.4em + 0.5rem);
+
 }
 
 .textTrend {
 	padding-left: 2em;
+	grid-area: sel-para;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative;
+	max-width: 100%;
+}
+
+.selectedTrend h3 {
+	font-weight: 400;
+    font-size: 1.4em;
+    margin-top: 0rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    grid-area: sel-header;
+}
+
+.textTrend p {
+    font-size: 1.1em;
+    line-height: 1.4em;
+    margin-top: 0em;
+    flex: 0 1 auto;
+    position: relative;
+}
+
+.textTrend .chart {
+	flex: 0 0 150px;
+	position: relative;
+}
+
+.textTrend .chart path.main {
+	stroke: var(--accent);
+}
+
+.imTrend {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-x: -20px;
+	background-color: var(--accent-transparent);
+	grid-area: sel-img;
+	height: 230px;
 }
 
 
@@ -297,6 +347,10 @@ li:first-child {
 		max-width: 90%;
 	    clear: both;
 	}
+
+	.selectedTrend {
+    	width: 90%;
+	}
 }
 
 @media (max-width: 600px) {
@@ -313,12 +367,18 @@ li:first-child {
 
 	.selectedTrend {
 		padding: 0em;
-		margin-left: -23.5%;
+		margin-left: -25%;
+    	width: 100vw;
+    	overflow: hidden;
+	}
+
+	.selectedTrend h3{
+		margin-left: 10px;
 	}
 
 	.timeline p, .timeline ul {
 		font-size: 1.25em;
-    	line-height: 1.75em;
+    	line-height: 1.85em;
 	}
 
 	.fashionLabel ul {

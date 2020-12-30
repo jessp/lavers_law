@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="main.css"/>
 	<script src="https://d3js.org/d3.v6.min.js"></script>
 	<script type="text/javascript" src="./descriptions.js"></script>
+	<script type="text/javascript" src="./lineChart.js"></script>
 	<script type="text/javascript" src="./timeline.js"></script>
 	<script type="text/javascript" src="./index.js"></script>
 	<title>Laver's Law at Scale</title>
@@ -25,12 +26,16 @@
 					<div class="listOfTrends"></div>
 				</div>
 			</div>
-			<figure class="selectedTrend">
+			<div class="selectedTrend">
+				<h3></h3>
+				<div class="imTrend"></div>
 				<div class="textTrend">
-					<h3></h3>
 					<p></p>
+					<div class="chart">
+						<svg></svg>
+					</div>
 				</div>
-			</figure>
+			</div>
 			<figure class="timelineHolder">
 				<div class="timeline">
 				</div>
