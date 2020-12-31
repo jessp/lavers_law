@@ -115,7 +115,7 @@ const descriptions = {
 	order: 22
 	},
 	"901" : {
-	name: "White Suits with Colourful Details",
+	name: "White Suits with Funky Details",
 	description: "You know what would go with that all white suit? A red-shirt. Apparently.",
 	order: 23
 	},
