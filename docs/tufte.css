@@ -6,10 +6,9 @@ html {
 }
 
 body {
-    width: 87.5%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 12.5%;
     background-color: #fffff8;
     color: #111;
     max-width: 1400px;
@@ -17,11 +16,11 @@ body {
 }
 
 h1 {
-    font-weight: 400;
-    margin-top: 4rem;
+    margin-top: 3rem;
     margin-bottom: 1.5rem;
     font-size: 3.2rem;
     line-height: 1;
+    font-weight: 700;
 }
 
 h2 {
@@ -52,10 +51,11 @@ hr {
 
 p.subtitle {
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
     font-size: 1.8rem;
     display: block;
     line-height: 1;
+    color: #828282;
 }
 
 .numeral {
@@ -73,6 +73,8 @@ article {
 section {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    width: 55%;
+    margin: 0 auto;
 }
 
 p,
@@ -119,20 +121,12 @@ blockquote {
 }
 
 blockquote p {
-    width: 55%;
     margin-right: 40px;
 }
 
 blockquote footer {
-    width: 55%;
     font-size: 1.1rem;
     text-align: right;
-}
-
-section > p,
-section > footer,
-section > table {
-    width: 55%;
 }
 
 /* 50 + 5 == 55, to be the same width as paragraph */
@@ -154,7 +148,7 @@ figure {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    max-width: 55%;
+    max-width: 100%;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
     margin: 0 0 3em 0;
@@ -346,10 +340,9 @@ label.margin-toggle:not(.sidenote-number) {
 }
 
 @media (max-width: 760px) {
-    body {
-        width: 84%;
-        padding-left: 8%;
-        padding-right: 8%;
+
+    section {
+        width: 80%;
     }
 
     hr,

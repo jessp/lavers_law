@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
   --main-grey: #8e8e8e;
@@ -19,6 +19,11 @@ body {
 p, ul {
 	font-size: 1.1em;
     line-height: 1.4em;
+}
+
+.bigP {
+	font-size: 1.4rem;
+	line-height: 2rem;
 }
 
 * {
@@ -199,7 +204,7 @@ li:first-child {
 	top: -1px;
 	background-color: var(--bg);
 	z-index: 3;
-	margin-left: -25%;
+	margin-left: -64%;
 	border-bottom: 1px solid var(--main-grey);
 }
 
@@ -242,7 +247,7 @@ li:first-child {
     "sel-header sel-header"
     "sel-img sel-para";
 	grid-template-rows: auto auto;
-	width: 55%;
+	width: 100%;
 	position: relative;
 	overflow: hidden;
 	min-height: calc(245px + 1.4em + 0.5rem);
@@ -354,10 +359,17 @@ li:first-child {
 	}
 }
 
+@media (max-width: 760px) {
+	.listOfTrendsContainer {
+		margin-left: -21.5%;
+	}
+}
+
 @media (max-width: 600px) {
 	.timelineHolder {
-		max-width: 100vw;
+		max-width: 95vw;
     	margin-left: -25%;
+    	padding-left: 4vw;
     	width: 100vw;
     	overflow: hidden;
 	}
