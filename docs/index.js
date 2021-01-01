@@ -11,7 +11,7 @@ document.onreadystatechange = () => {
 	  		year: parseInt(d.year),
 	  		designer: des_name.trim(),
 	  		cluster: parseInt(d.cluster),
-	  		file_name: d.file_name.replace(/[&'éç]/g, "_")
+	  		file_name: d.file_name
 	  	};
 	}).then(function(data) {
 		let formatted = 
