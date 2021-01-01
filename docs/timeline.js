@@ -29,6 +29,8 @@ class Timeline {
     d3.select(".imTrend")
       .style("background-image", `url('./assets/out_md/${this_image[1].substring(0, this_image[1].length - 3)}png')`);
     
+    const sectionStart = document.getElementById("chooseStyle");
+
     this.callback(this.data["" + this.selected_cluster]);
 
     this.list_holder.selectAll("div")
@@ -43,6 +45,7 @@ class Timeline {
   			this.images = this.data[this.selected_cluster];
         this.populateTrendList();
   			this.populateTimeline();
+        sectionStart.scrollIntoView({behavior: "smooth"});
   		});
   }
 
@@ -109,7 +112,7 @@ class Timeline {
   			const num_items = d[1].length;
   			const year = d[0];
   			if (num_items > 0){
-  				return `Trend appears <span class='emphasis'>${num_items} time${num_items > 1 ? "s" : ""}</span class='emphasis'><span class='emphasis hideOnSmall'> in ${year}</span>, in the following shows:`
+  				return `Trend appears <span class='emphasis'>${num_items} time${num_items > 1 ? "s" : ""}</span class='emphasis'><span class='emphasis hideOnSmall'> in ${year}</span>, in the following show${num_items > 1 ? "s" : ""}:`
   			}
   			return "";
   		});
@@ -122,6 +125,16 @@ class Timeline {
   			const image_html = d[1].map(e => `<img src='./assets/out_sm/${e.substring(0, e.length - 3)}png'>`).join("");
   			return `${d[0]} ${image_html}`
   		})
+      .each(function(d){
+        const that = d3.select(this);
+        const parent = d3.select(that.node().parentNode.parentNode.parentNode);
+        that.selectAll("img")
+          .on("click", function(e){
+            const imgSrc = this.src;
+            parent.select(".yearLabel div")
+              .style("background-image", `url(${imgSrc.replace("out_sm", "out_md")}`);
+          });
+      })
 
 
   	this.segments.select(".yearLabel div")

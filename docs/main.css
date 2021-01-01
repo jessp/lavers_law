@@ -181,7 +181,20 @@ p, ul {
 	object-fit: cover;
 	object-position: -7px;
 	vertical-align: middle;
+	cursor: pointer;
 }
+
+.fashionLabel ul li img:not(.selImage):before {
+    position: absolute;
+    content: '';
+    background-color:var(--accent);
+    border-radius:50%;
+    opacity:0.5;
+    width: 2px;
+    height: 2px;
+    pointer-events: none;
+}
+
 
 .centreLine {
 	stroke: black;
@@ -228,7 +241,7 @@ li:first-child {
 	background-position-y: 5px;
 }
 
-.listOfTrends div:hover {
+.listOfTrends div:hover, .trendScroller div.selected {
 	background-size: 99px 110px;
 	background-position-y: 0px;
 	background-position-x: -16px;
