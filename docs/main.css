@@ -3,6 +3,7 @@
 :root {
   --main-grey: #8e8e8e;
   --bg: #edecec;
+  --bg-transparent: #edececff;
   --accent: #1F64CC;
   --accent-transparent: #1F64CC66;
   --label-main: 'IBM Plex Mono';
@@ -278,6 +279,42 @@ li:first-child {
 	overflow: hidden;
 	min-height: calc(245px + 1.4em + 0.5rem);
 
+}
+
+.arrow {
+	position: absolute;
+	width: 50px;
+	height: 100%;
+	top: 0px;
+	cursor: pointer;
+}
+
+.arrow svg {
+	position: absolute;
+	width: 16px;
+	height:16px;
+	fill: none;
+	stroke-width: 2;
+	stroke: var(--accent);
+	top: calc(50% - 8px);
+}
+
+.leftArrow {
+	left: 0px;
+	background: linear-gradient(90deg, var(--bg), transparent);
+}
+
+.rightArrow {
+	right: 0px;
+	background: linear-gradient(90deg, transparent, var(--bg));
+}
+
+.leftArrow svg {
+	left: calc(25% - 8px);
+}
+
+.rightArrow svg {
+	left: calc(75% - 8px);
 }
 
 .textTrend {

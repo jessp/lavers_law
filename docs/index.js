@@ -31,7 +31,7 @@ document.onreadystatechange = () => {
 				}));	
 
 		const trendLine = new LineChart(".selectedTrend .chart svg", formatted);
-		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "26", e => trendLine.updateData(e));
+		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "350", e => trendLine.updateData(e));
 	});
 
   }
