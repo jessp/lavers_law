@@ -9,18 +9,27 @@ class Timeline {
   	this.selected_cluster = selected_cluster;
   	this.images = this.data[this.selected_cluster];
     this.callback = callback;
+    this.disableScroll = false;
+    this.scrollWidth = 0;
+    this.scrollPos = 0;
+    this.clonesHeight = 75 * Object.keys(this.data).length;
 
   	this.populateTrendList();
   	this.populateTimeline();
+
+    this.reCalc();
   }
 
   populateTrendList(){
     const cluster_text = descriptions["" + this.selected_cluster] || {"name": "", "description": "", "order": 0};
-    const trend_images = 
+    const trend_images_half = 
       Object.entries(this.data)
         .map(e => [e[0], Object.values(Object.values(e[1]
             .filter(f => f[1].length > 0))[2][1][0])[0]])
         .sort((a, b) => descriptions["" + a[0]]["order"] - descriptions["" + b[0]]["order"]);
+
+    const trend_images = trend_images_half.concat(trend_images_half);
+
 
     const this_image = trend_images.find(e => e[0] === "" + this.selected_cluster);
     
@@ -34,7 +43,7 @@ class Timeline {
     this.callback(this.data["" + this.selected_cluster]);
 
     this.list_holder.selectAll("div")
-  		.data(trend_images, d => d[0])
+  		.data(trend_images, (d, i) => d[0] + i)
   		.join("div")
       .attr("class", d => d[0] === this.selected_cluster ? "selected" : "")
   		.style("background-image", function(d){
@@ -47,6 +56,8 @@ class Timeline {
   			this.populateTimeline();
         sectionStart.scrollIntoView({behavior: "smooth"});
   		});
+
+    d3.select(this.list_holder.node().parentNode).on("scroll", () =>  window.requestAnimationFrame(this.scrollUpdate.bind(this)));
   }
 
   populateTimeline(){
@@ -168,5 +179,46 @@ findLastIndex(array) {
 	return finalIndex;
 }
 
+//adapted from https://codepen.io/vincentorback/pen/OpdNJa
+getScrollPos () {
+  const context = this.list_holder.node().parentNode;
+  return (context.pageXOffset || context.scrollLeft);
+}
+
+setScrollPos (pos) {
+  const context = this.list_holder.node().parentNode;
+  context.scrollLeft = pos;
+}
+
+reCalc () {
+  const context = this.list_holder.node().parentNode;
+  this.scrollPos = this.getScrollPos();
+  this.scrollWidth = context.scrollWidth;
+
+  if (this.scrollPos <= 0) {
+    this.setScrollPos(1); // Scroll 1 pixel to allow upwards scrolling
+  }
+}
+
+scrollUpdate () {
+  if (!this.disableScroll) {
+    this.scrollPos = this.getScrollPos();
+    if (this.clonesHeight + this.scrollPos >= this.scrollWidth) {
+      // Scroll to the top when you’ve reached the bottom
+      this.setScrollPos(1) // Scroll down 1 pixel to allow upwards scrolling
+      this.disableScroll = true
+    } else if (this.scrollPos <= 0) {
+      // Scroll to the bottom when you reach the top
+      this.setScrollPos(this.scrollWidth - this.clonesHeight)
+      this.disableScroll = true
+    }
+  }
+  if (this.disableScroll) {
+    // Disable scroll-jumping for a short time to avoid flickering
+    window.setTimeout(() => {
+      return this.disableScroll = false;
+    }, 40)
+  }
+}
 
 }

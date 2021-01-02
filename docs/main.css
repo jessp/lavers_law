@@ -210,7 +210,6 @@ li:first-child {
 
 .listOfTrendsContainer {
 	padding-top: 1em;
-	padding-bottom: 1em;
 	width: 100vw;
 	position: -webkit-sticky;
 	position: sticky;
@@ -226,6 +225,19 @@ li:first-child {
 	overflow-x: auto;
 }
 
+.trendScroller {
+	scrollbar-width: none;
+}
+
+.trendScroller::scrollbar {
+  display: none;
+}
+
+.trendScroller::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 .listOfTrends {
 	width: max-content;
 }
@@ -239,6 +251,7 @@ li:first-child {
 	background-repeat: no-repeat;
 	background-position-x: -12px;
 	background-position-y: 5px;
+	scroll-snap-align: start;
 }
 
 .listOfTrends div:hover, .trendScroller div.selected {
@@ -396,7 +409,7 @@ li:first-child {
 		max-width: 95vw;
     	margin-left: -25%;
     	padding-left: 4vw;
-    	width: 100vw;
+    	width: 95vw;
     	overflow: hidden;
 	}
 
@@ -407,7 +420,7 @@ li:first-child {
 	.selectedTrend {
 		padding: 0em;
 		margin-left: -25%;
-    	width: 100vw;
+    	width: 95vw;
     	overflow: hidden;
     	grid-template-columns: 150px minmax(50px, 100%);
 	}
