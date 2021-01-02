@@ -310,7 +310,7 @@ li:first-child {
 }
 
 .leftArrow svg {
-	left: calc(25% - 8px);
+	left: calc(25% - 4px); /*fudging the numbers for visual balance*/
 }
 
 .rightArrow svg {
