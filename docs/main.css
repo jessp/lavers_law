@@ -223,7 +223,7 @@ li:first-child {
 
 .trendScroller {
 	width: 100%;
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 
 .listOfTrends {
@@ -310,6 +310,19 @@ li:first-child {
 	height: 230px;
 }
 
+.yAxis .domain {
+	display: none;
+}
+
+.yAxis .tick line {
+	stroke-dasharray: 2,2;
+	stroke-opacity: 0.5;
+}
+
+.xAxisTitle {
+	font-size: 10px;
+}
+
 
 @keyframes style-appear {
     0% {
@@ -372,9 +385,9 @@ li:first-child {
 	}
 }
 
-@media (max-width: 760px) {
+@media (max-width: 950px) {
 	.listOfTrendsContainer {
-		margin-left: -21.5%;
+		margin-left: -29%;
 	}
 }
 

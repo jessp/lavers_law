@@ -3,7 +3,7 @@ class LineChart {
 
   constructor(holder) {
   	this.holder = d3.select(holder);
-    this.margin = {"left": 15, "right": 15, "top": 5, "bottom": 25};
+    this.margin = {"left": 10, "right": 15, "top": 15, "bottom": 35};
     this.scale_x = d3.scaleLinear();
     this.scale_y = d3.scaleLinear();
 
@@ -17,11 +17,16 @@ class LineChart {
 
     this.path = this.holder.append("path").attr("class", "main");
 
+    this.y_title = d3.select(holder)
+        .append("text")
+        .attr("class", "xAxisTitle")
+        .attr("text-anchor", "middle");
+
   }
 
   updateData(data){
     this.width = this.holder.node().parentNode.clientWidth;
-    this.height = 150;
+    this.height = 145;
 
     this.data = data;
     this.holder
@@ -33,8 +38,13 @@ class LineChart {
 
   drawTimeline(){
     const max_items = d3.max(this.data.map(e => e[1].length));
-    this.scale_x.domain([1988, 2015]).range([this.margin.left, this.width - this.margin.right]);
+    this.scale_x.domain([1990, 2014]).range([this.margin.left, this.width - this.margin.right]);
     this.scale_y.domain([max_items, 0]).range([this.margin.top, this.height - this.margin.bottom]);
+
+    this.y_title
+      .transition().duration(300)
+      .attr("transform", `translate(${(this.width - this.margin.left - this.margin.right)/2 + this.margin.left},${this.height - 3})`)
+      .text("Collection Year");
 
     this.x_axis
       .attr("transform", `translate(0,${this.height - this.margin.bottom})`)
@@ -42,8 +52,18 @@ class LineChart {
 
     this.y_axis
       .attr("transform", `translate(${this.margin.left},0)`)
-      .transition().duration(200)
-      .call(d3.axisLeft(this.scale_y).ticks(max_items, "f"));
+      .transition().duration(300)
+      .call(d3.axisRight(this.scale_y)
+        .ticks(max_items)
+        .tickSize(this.width - this.margin.left - this.margin.right)
+        .tickFormat(function(d, i){
+          return i !== 0 ? `${d}` : `${d} appearances on runways`;
+        }))
+      .call(g => g.select(".domain")
+        .remove())
+      .call(g => g.selectAll(".tick text")
+        .attr("y", -8)
+        .attr("x", 1))
 
     this.path
       .datum(this.data)
