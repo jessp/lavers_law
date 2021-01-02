@@ -17,8 +17,11 @@ class Timeline {
     this.leftArrow = d3.select(this.scroll_holder)
       .append("div").attr("class", "leftArrow arrow")
       .on("click", d => {
-        this.setScrollPos(this.scroll_pos - 75);
-        this.scrollUpdate();
+        if (this.scroll_pos - 75 <= 0){
+          this.setScrollPos(this.scroll_width - this.clones_height - 75);
+        } else {
+          this.setScrollPos(this.scroll_pos - 75);
+        }
         return null;
       });
 
@@ -29,8 +32,11 @@ class Timeline {
     this.rightArrow = d3.select(this.scroll_holder)
       .append("div").attr("class", "rightArrow arrow")
       .on("click", d => {
-        this.setScrollPos(this.scroll_pos + 75);
-        this.scrollUpdate();
+        if (this.clones_height + this.scroll_pos + 75 >= this.scroll_width){
+          this.setScrollPos(0);
+        } else {
+          this.setScrollPos(this.scroll_pos + 75);
+        }
         return null;
       });
 
@@ -204,7 +210,7 @@ findLastIndex(array) {
 }
 
 //adapted from https://codepen.io/vincentorback/pen/OpdNJa
-getScrollPos () {
+getScrollPos (arrow) {
   const context = this.scroll_holder;
   return (context.pageXOffset || context.scrollLeft);
 }
@@ -225,15 +231,17 @@ reCalc () {
 }
 
 scrollUpdate () {
+
   if (!this.disable_scroll) {
     this.scroll_pos = this.getScrollPos();
+
     if (this.clones_height + this.scroll_pos >= this.scroll_width) {
       // Scroll to the top when you’ve reached the bottom
       this.setScrollPos(1) // Scroll down 1 pixel to allow upwards scrolling
       this.disable_scroll = true
     } else if (this.scroll_pos <= 0) {
       // Scroll to the bottom when you reach the top
-      this.setScrollPos(this.scroll_width - this.clones_height)
+      this.setScrollPos(this.scroll_width - this.clones_height);
       this.disable_scroll = true
     }
   }
