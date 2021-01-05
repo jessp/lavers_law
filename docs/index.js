@@ -11,7 +11,7 @@ document.onreadystatechange = () => {
 	  		year: parseInt(d.year),
 	  		designer: des_name.trim(),
 	  		cluster: parseInt(d.cluster),
-	  		file_name: d.file_name
+	  		file_name: d.file_name.substring(0, d.file_name.length - 3) + "png"
 	  	};
 	}).then(function(data) {
 		let formatted = 
@@ -30,8 +30,29 @@ document.onreadystatechange = () => {
 					return new_obj;
 				}));	
 
-		const trendLine = new LineChart(".selectedTrend .chart svg", formatted);
-		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "350", e => trendLine.updateData(e));
+		const trend_line = new LineChart(".selectedTrend .chart svg", formatted);
+		const timeline = new Timeline(".timeline", ".listOfTrends", formatted, "350", e => trend_line.updateData(e));
+		
+		
+		let table_data = [...Array.from(d3.group(data, d => d.cluster))]
+			.map(function([key, value]){
+				let obj = new Object();
+				obj["Image"] = `./assets/out_sm/${value[5]["file_name"]}`;
+				obj["Name"] = descriptions["" + value[0]["cluster"]]["name"];
+				obj["Trend"] = formatted[value[0]["cluster"]];
+				obj["First Year"] = d3.min(value, d => d.year);
+				let grouped_by_year = [...Array.from(d3.group(value, d => d.year))];
+				let peak_year_count = d3.max([...Array.from(d3.group(value, d => d.year))], e => e[1].length);
+				obj["Peak Year"] = grouped_by_year.find(d => d[1].length === peak_year_count)[0];
+				obj["# Looks"] = value.length;
+				let grouped_by_designer = [...Array.from(d3.group(value, d => d.designer))];
+				let max_designer_count = d3.max(grouped_by_designer.map(e => e[1].length));
+				let representative_designer = grouped_by_designer.filter(e => e[1].length === max_designer_count);
+				obj["Common Designer"] = representative_designer.length === 1 && representative_designer[0][1].length > 1 ? representative_designer[0][0] : "-";
+				return obj;
+			});
+
+		let table = new Table(".compareTable", table_data);
 	});
 
   }

@@ -373,6 +373,37 @@ li:first-child {
 	font-size: 10px;
 }
 
+table.compareTable {
+	border-spacing: 0px;
+}
+
+.compareTable tr th {
+	border-bottom: 1px solid black;
+	text-align: left;
+	padding: 5px 5px 5px 0px;
+}
+
+.compareTable tr td {
+	border-bottom: 1px solid var(--main-grey);
+	padding: 5px 5px 5px 0px;
+}
+
+.compareTable div {
+	background-size: cover;
+    width: 20px;
+    height: 35px;
+    background-position-x: -7px;
+}
+
+.compareTable svg {
+	overflow: visible;
+}
+
+.compareTable path {
+	stroke: var(--accent);
+	stroke-width: 1;
+	fill: none;
+}
 
 @keyframes style-appear {
     0% {

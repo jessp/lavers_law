@@ -68,7 +68,7 @@ class Timeline {
     d3.select(".selectedTrend").select("h3").html(cluster_text["name"]);
     d3.select(".textTrend").select("p").html(cluster_text["description"]);
     d3.select(".imTrend")
-      .style("background-image", `url('./assets/out_md/${this_image[1].substring(0, this_image[1].length - 3)}png')`);
+      .style("background-image", `url('./assets/out_md/${this_image[1]}')`);
     
     const sectionStart = document.getElementById("chooseStyle");
 
@@ -79,7 +79,7 @@ class Timeline {
   		.join("div")
       .attr("class", d => d[0] === this.selected_cluster ? "selected" : "")
   		.style("background-image", function(d){
-  			return `url('./assets/out_md/${d[1].substring(0, d[1].length - 3)}png')`;
+  			return `url('./assets/out_md/${d[1]}')`;
   		})
   		.on("click", (e, d) => {
   			this.selected_cluster = d[0];
@@ -163,7 +163,7 @@ class Timeline {
   		.data(d => Object.entries(this.reduceArray(d[1])))
   		.join("li")
   		.html(function(d){
-  			const image_html = d[1].map(e => `<img src='./assets/out_sm/${e.substring(0, e.length - 3)}png'>`).join("");
+  			const image_html = d[1].map(e => `<img src='./assets/out_sm/${e}'>`).join("");
   			return `${d[0]} ${image_html}`
   		})
       .each(function(d){
@@ -183,7 +183,7 @@ class Timeline {
   			const num_items = d[1].length;
   			if (num_items > 0){
   				let name = Object.values(d[1][0])[0];
-  				return `url('./assets/out_md/${name.substring(0, name.length - 3)}png')`;
+  				return `url('./assets/out_md/${name}')`;
   			}
   			return null;
   		})
