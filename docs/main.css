@@ -212,6 +212,7 @@ li:first-child {
 .listOfTrendsContainer {
 	padding-top: 1em;
 	width: 100vw;
+	max-width: 230%;
 	position: -webkit-sticky;
 	position: sticky;
 	top: -1px;
@@ -224,6 +225,7 @@ li:first-child {
 .trendScroller {
 	width: 100%;
 	overflow-x: auto;
+
 }
 
 .trendScroller {
@@ -381,12 +383,24 @@ table.compareTable {
 	border-bottom: 1px solid black;
 	text-align: left;
 	padding: 5px 5px 5px 0px;
+	cursor: pointer;
+}
+
+.compareTable tr th:nth-of-type(1),
+.compareTable tr th:nth-of-type(3) {
+	cursor: no-drop;
 }
 
 .compareTable tr td {
 	border-bottom: 1px solid var(--main-grey);
-	padding: 5px 5px 5px 0px;
+	padding: 5px 10px 5px 0px;
 }
+
+.compareTable tr > *:nth-of-type(4),
+.compareTable tr > *:nth-of-type(5),
+.compareTable tr > *:nth-of-type(6) {
+	text-align: right;
+} 
 
 .compareTable div {
 	background-size: cover;
@@ -464,6 +478,15 @@ table.compareTable {
 	.selectedTrend {
     	width: 90%;
 	}
+
+	.compareTable tr > *:nth-child(7) {
+		display: none;
+	}
+
+	.compareTable tr > *:nth-child(3) svg {
+		width: 80px;
+		height: 24px;
+	}
 }
 
 @media (max-width: 950px) {
@@ -475,7 +498,7 @@ table.compareTable {
 @media (max-width: 600px) {
 	.timelineHolder {
 		max-width: 95vw;
-    	margin-left: -25%;
+    	margin-left: -28%;
     	padding-left: 4vw;
     	width: 95vw;
     	overflow: hidden;
@@ -483,14 +506,22 @@ table.compareTable {
 
 	.hideOnSmall {
 		display: none;
+		width: 95vw;
+    	overflow: hidden;
 	}
 
 	.selectedTrend {
 		padding: 0em;
-		margin-left: -25%;
+		margin-left: -28%;
     	width: 95vw;
     	overflow: hidden;
     	grid-template-columns: 150px minmax(50px, 100%);
+	}
+
+	.compareTable {
+		margin-left: -28%;
+    	width: 100vw;
+    	padding: 0px 5px;
 	}
 
 	.selectedTrend h3{
@@ -526,5 +557,16 @@ table.compareTable {
 		background-size: 180px 200px;
 		background-position-y: 50%;
 		background-position-x: -35px;
+	}
+
+	.compareTable tr > *:nth-child(3) svg {
+		width: 75px;
+		height: 20px;
+	}
+}
+
+@media (max-width: 400px) {
+	.compareTable {
+		font-size: 80%;
 	}
 }

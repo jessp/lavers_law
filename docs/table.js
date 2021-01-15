@@ -6,7 +6,7 @@ class Table {
     this.svg_width = 100;
     this.svg_height = 30;
     this.prev_sort = null;
-    this.sort = "Peak Year";
+    this.sort = "1st Year";
     const max_items = d3.max(this.data, d => d3.max(d["Trend"], g => g[1].length));
     this.scale_x = d3.scaleLinear()
       .domain([1991, 2014])
@@ -26,17 +26,27 @@ class Table {
       .data(Object.keys(this.data[0]), d => d)
       .enter()
       .append("th")
-      .style("width", d => d === "Name" ? "180px" : "")
+      .style("width", d => {
+        if (d === "Name"){
+          return "180px";
+        } else if (d ===  "Common Designer"){
+          return "100px";
+        } else {
+          return null;
+        }
+      }
+      )
       .on("click", (d, e) => {
-        this.sort = e;
-        this.sortData();
+        if (e !== "Image" && e !== "Trend"){
+          this.sort = e;
+          this.sortData();
+        }
         return null;
-      })
-      .html(d => d);
+      });
 
     this.table_body = this.table.append("tbody");
-    this.sortData();
     this.drawTable();
+    this.sortData();
 
   }
 
@@ -64,11 +74,25 @@ class Table {
       }
     });
 
+    this.table.selectAll("th")
+      .html(d => {
+        if (d === this.sort){
+          if (this.prev_sort === this.sort){
+            return d + " ↑";
+          } else {
+            return d + " ↓";
+          }
+        } else {
+          return d;
+        }
+      });
+
     if (this.prev_sort === this.sort){
       this.prev_sort = null;
     } else {
       this.prev_sort = this.sort;
     }
+
   }
 
   drawTrendLine(year_data){

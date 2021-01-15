@@ -40,10 +40,10 @@ document.onreadystatechange = () => {
 				obj["Image"] = `./assets/out_sm/${value[5]["file_name"]}`;
 				obj["Name"] = descriptions["" + value[0]["cluster"]]["name"];
 				obj["Trend"] = formatted[value[0]["cluster"]];
-				obj["First Year"] = d3.min(value, d => d.year);
+				obj["1st Year"] = d3.min(value, d => d.year);
 				let grouped_by_year = [...Array.from(d3.group(value, d => d.year))];
 				let peak_year_count = d3.max([...Array.from(d3.group(value, d => d.year))], e => e[1].length);
-				obj["Peak Year"] = grouped_by_year.find(d => d[1].length === peak_year_count)[0];
+				obj["Peak"] = grouped_by_year.find(d => d[1].length === peak_year_count)[0];
 				obj["# Looks"] = value.length;
 				let grouped_by_designer = [...Array.from(d3.group(value, d => d.designer))];
 				let max_designer_count = d3.max(grouped_by_designer.map(e => e[1].length));
