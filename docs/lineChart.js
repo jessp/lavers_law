@@ -1,8 +1,10 @@
 /*TODO normalize data to num images*/
 class LineChart {
 
-  constructor(holder) {
+  constructor(holder, year_data, button) {
   	this.holder = d3.select(holder);
+    this.year_data = year_data;
+    this.normalized = false;
     this.margin = {"left": 10, "right": 15, "top": 15, "bottom": 35};
     this.scale_x = d3.scaleLinear();
     this.scale_y = d3.scaleLinear();
@@ -13,7 +15,7 @@ class LineChart {
     this.line = d3.line()
       .defined(d => !isNaN(d[0]))
       .x(d => this.scale_x(d[0]))
-      .y(d => this.scale_y(d[1].length));
+      .y(d => this.scale_y(this.normalized ? d[1].length/this.year_data.find(f => f["year"] === d[0])["count"] * 100 : d[1].length));
 
     this.path = this.holder.append("path").attr("class", "main");
 
@@ -21,6 +23,12 @@ class LineChart {
         .append("text")
         .attr("class", "xAxisTitle")
         .attr("text-anchor", "middle");
+
+    this.button = d3.select(button)
+      .on("click", () => {
+        this.normalized = !this.normalized;
+        this.drawTimeline();
+      });
 
   }
 
@@ -37,9 +45,13 @@ class LineChart {
   }
 
   drawTimeline(){
-    const max_items = d3.max(this.data.map(e => e[1].length));
-    this.scale_x.domain([1990, 2014]).range([this.margin.left, this.width - this.margin.right]);
-    this.scale_y.domain([max_items, 0]).range([this.margin.top, this.height - this.margin.bottom]);
+    const max_items = this.normalized ? d3.max(this.data.map(e => e[1].length/this.year_data.find(f => f["year"] === e[0])["count"])) * 100 : d3.max(this.data.map(e => e[1].length));
+    this.scale_x
+      .domain([1990, 2014])
+      .range([this.margin.left, this.width - this.margin.right]);
+    this.scale_y
+      .domain([max_items, 0])
+      .range([this.margin.top, this.height - this.margin.bottom]);
 
     this.y_title
       .transition().duration(300)
@@ -54,9 +66,12 @@ class LineChart {
       .attr("transform", `translate(${this.margin.left},0)`)
       .transition().duration(300)
       .call(d3.axisRight(this.scale_y)
-        .ticks(max_items)
+        .ticks(this.normalized ? 4 : max_items)
         .tickSize(this.width - this.margin.left - this.margin.right)
-        .tickFormat(function(d, i){
+        .tickFormat((d, i) => {
+          if (this.normalized){
+            return i !== 0 ? `${d}%` : `${d}% of photos this year include this look`;
+          }
           return i !== 0 ? `${d}` : `${d} appearances on runways`;
         }))
       .call(g => g.select(".domain")

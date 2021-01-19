@@ -4,8 +4,8 @@
   --main-grey: #8e8e8e;
   --bg: #edecec;
   --bg-transparent: #edececff;
-  --accent: #1F64CC;
-  --accent-transparent: #1F64CC66;
+  --accent: #980505;
+  --accent-transparent: #98050544;
   --label-main: 'IBM Plex Mono';
   --label-fallback: monospace;
   --small-size: 30px;
@@ -417,6 +417,14 @@ table.compareTable {
 	stroke: var(--accent);
 	stroke-width: 1;
 	fill: none;
+}
+
+.normalizeButton {
+    font-size: 70%;
+}
+
+.normalizeButton * {
+	vertical-align: middle;
 }
 
 @keyframes style-appear {
