@@ -427,6 +427,21 @@ table.compareTable {
 	vertical-align: middle;
 }
 
+.tableHolder.hideExtra {
+	height: 531px;
+	overflow: hidden;
+}
+
+.tableCollapser {
+	color: #fff;
+    background: var(--accent);
+    border: none;
+    text-transform: uppercase;
+    margin-top: 1em;
+    padding: 0.3em 0.6em;
+    cursor: pointer;
+}
+
 @keyframes style-appear {
     0% {
         opacity: 0;

@@ -1,8 +1,9 @@
 class Table {
 
-  constructor(holder, data) {
+  constructor(holder, data, collapse_button) {
     this.table = d3.select(holder);
     this.data = data;
+    this.collapse_button = d3.select(collapse_button);
     this.svg_width = 100;
     this.svg_height = 30;
     this.prev_sort = null;
@@ -47,6 +48,14 @@ class Table {
     this.table_body = this.table.append("tbody");
     this.drawTable();
     this.sortData();
+
+    this.collapse_button.on("click", () => {
+      const table_parent = d3.select(this.table.node().parentNode);
+      const is_hiding = table_parent.classed("hideExtra");
+      table_parent.classed("hideExtra", !is_hiding);
+      this.collapse_button.html(is_hiding ? "Show 10 Only" : "Show All");
+      return null;
+    })
 
   }
 
