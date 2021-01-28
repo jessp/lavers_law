@@ -15,49 +15,93 @@
 </head>
 <body>
 	<article>
-		<section>
-			<h1>Laver's Law at Scale</h1>
-    		<p class="subtitle">J. Peter</p>
-			<p class="bigP">Fashion historian James Laver <a href="https://en.wikipedia.org/wiki/James_Laver" target="_blank">first wrote about “Laver’s Law” in his 1937 book <i>Taste and Fashion</i></a>. This theory attempts to categorize how clothing is perceived as it goes in and out of style.</p>
-			<p>Inspired by Laver, I wanted to see if it was possible to unearth some kind of formula that describes the modern fashion cycle, but computationally in order to account for the wealth of fashion imagery available over the internet. In short: I couldn’t. But what I made is still interesting, albeit messy.</p>
-			<p>I algorithmically clustered almost 300,000 runway images shot between 1989 and 2014 sourced from the excellent <a href="https://fashionheritage.eu/" target="_blank">European Fashion Heritage Association</a>. Below you can explore an interactive sample of this work, which contains around 1,000 images clustered into 50 styles.</p>
-		</section>
-		<section>
-			<h2 id="chooseStyle">Choose a Style Cluster</h2>
-			<div class="listOfTrendsContainer">
-				<div class="trendScroller">
-					<div class="listOfTrends"></div>
-				</div>
+		<div class="colorWrapper">
+			<div class="sectionWrapper">
+				<section>
+					<h1>Laver's Law at Scale</h1>
+		    		<p class="subtitle">J. Peter</p>
+					<p class="bigP">Fashion historian James Laver <a href="https://en.wikipedia.org/wiki/James_Laver" target="_blank">first wrote about “Laver’s Law” in his 1937 book <i>Taste and Fashion</i></a>. This theory attempts to categorize how clothing is perceived as it goes in and out of style.</p>
+					<p>Inspired by Laver, I wanted to see if it was possible to unearth some kind of formula that describes the modern fashion cycle, but computationally in order to account for the wealth of fashion imagery available over the internet. In short: I couldn’t. But what I made is still interesting, albeit messy.</p>
+					<p>I algorithmically clustered almost 300,000 runway images shot between 1989 and 2014 sourced from the excellent <a href="https://fashionheritage.eu/" target="_blank">European Fashion Heritage Association</a>. Below you can explore an interactive sample of this work, which contains around 1,000 images clustered into 50 styles.</p>
+				</section>
 			</div>
-			<div class="selectedTrend">
-				<h3></h3>
-				<div class="imTrend"></div>
-				<div class="textTrend">
-					<p></p>
-					<div class="chart">
-						<svg></svg>
+		</div>
+		<div class="colorWrapper">
+			<div class="sectionWrapper">
+				<section>
+					<h2 id="chooseStyle">Choose a Style Cluster</h2>
+					<div class="listOfTrendsContainer">
+						<div class="trendScroller">
+							<div class="listOfTrends"></div>
+						</div>
 					</div>
-					<form class="normalizeButton">
-						<input type="checkbox" id="norm" name="normalizer">
-    					<label for="norm">Normalize based on available photos per year</label>
-					</form>
-				</div>
+					<div class="selectedTrend">
+						<h3></h3>
+						<div class="imTrend"></div>
+						<div class="textTrend">
+							<p></p>
+							<div class="chart">
+								<svg></svg>
+							</div>
+							<form class="normalizeButton">
+								<input type="checkbox" id="norm" name="normalizer">
+		    					<label for="norm">Normalize based on available photos per year</label>
+							</form>
+						</div>
+					</div>
+					<figure class="timelineHolder">
+						<div class="timeline">
+						</div>
+					</figure>
+				</section>
 			</div>
-			<figure class="timelineHolder">
-				<div class="timeline">
-				</div>
-			</figure>
-		</section>
-		<section>
-			<h2>A Recap</h2>
-			<p>As caveat-laden as our results are, let's zoom out for a moment and look at these style clusters in comparison to one another.</p>
-			<div class="tableHolder hideExtra">
-				<table class="compareTable"></table>
+		</div>
+		<div class="colorWrapper">
+			<div class="sectionWrapper">
+				<section>
+					<h2>A Recap</h2>
+					<p>As caveat-laden as our results are, let's zoom out for a moment and look at these style clusters in comparison to one another.</p>
+					<div class="tableHolder hideExtra">
+						<table class="compareTable"></table>
+					</div>
+					<button class="tableCollapser">
+						Show All
+					</button>
+				</section>
 			</div>
-			<button class="tableCollapser">
-				Show All
-			</button>
-		</section>
+		</div>
+		<div class="colorWrapper inverse">
+			<div class="sectionWrapper">
+				<section>
+					<h2>Methods</h2>
+					<p>First off, I'll ackowledge with all humility that, other than that one job where I was employed under the title "data scientist" based on a technicality, I specialize in data visualization and don't generally do my own stunts. So, my process for investigating this topic was based in a lot of assumptions and limited by my knowledge of and access to available tools.
+					</p>
+					<h3>The Dataset</h3>
+					<p>I started with a dataset of 472,465 runway photos from the excellent <a href="https://fashionheritage.eu/" target="_blank">European Fashion Heritage Association</a> (EFHA), specifically from the company <a href="https://www.catwalkpictures.com/index,en.html">Catwalk Pictures</a>. I chose to use only Catwalk Pictures's photos for their consistent framing, long history of photos (dating from 1989 to 2014 within those hosted on the EFHA archive), and high quality.</p>
+					<p>I initially downloaded these photos to my personal machine before moving them into a dedicated Google Drive account to work with Colab. If I knew I was going to work in Colab to begin with, I would have started there, but I was still weighing my options at the time of that decision. I bring this up because sometime during this transferring, I lost photos from 2014 numbering in the tens of thousands.</p>
+					<h3>Preprocessing</h3>
+					<p>I wanted to reduce the chances of images being clustered together because they appeared on similar-looking runways (or in the same shows). After some experimenting, I used <a href="https://github.com/aadityavikram/Background-Removal">Aaditya Vikram's background removal procedure</a>, selected the largest remaining contour afterwards using OpenCV, and scaled the final image. This did a reasonable job, though admittedly it had trouble with particularly busy backgrounds and low-contrast shots.</p>
+					<figure data-children-count="1">
+						<img src="./assets/rejected_images.png"/>
+						<span>I've heard of avant garde but this is ridiculous.</span>
+					</figure>
+					<p>The Lovecraftian outputs wrought from processing <i>those</i> kinds of shots were more Magic the Gathering than Maison Martin Margeila (and there was a handful of more closely cropped photos to ruin my dreams of uniforming framing), so I applied another round of filters. With OpenCV, I filtered my background removed dataset until only images including one face of the approximate right scale in the approximate centre of the image remained. The trade-off to this method was that a number of photos featuring low-brimmed hats and eye-obscuring haircuts were filtered out. My final image count at the end of this exercise (and filtering out images without a valid year extractable from the name) was 272,361.</p>
+					<h3>Clustering</h3>
+					<p>My choice and use of clustering method is probably where I made the most mistakes. Besides a lack of data science expertese, I was also determined to find a method that would work given less than Colab's 25GB of RAM and less than 200GB of storage space in my chosen plan.</p>
+					<p>I experimented with BIRCH but couldn't get the memory requirement to a manageable level. I couldn't get DenStream to do much of anything, and by doing a number of tests on subsets of the data, the data appeared to noisy to supply K-Means with a good k value that would scale if put in a streaming context. I'm trying to summarize a lot of experiments here that were scrapped months ago at various stages. It's very possible that there is a way to get one of these methods to work, and I just wasn't using the right parameters, dimensionality reduction techniques or feature extraction methods.</p>
+					<p>Results shown above came from using Steve Schmerler's imagecluster library. imagecluster provides utilities for feature extraction using VGG16, and clustering using scipy's hierarchical clustering function. I still needed a way to make the dataset size manageable within my Colab budget, but didn't want to choose a sample size arbitrarily.</p>
+					<p>I used PCA to reduce my feature data, and then iteratively clustered my data, each time discarding overly large clusters and singletons, until the remaining dataset (representing 27,563 images) could be clustered within my technical limitations. Parameters for clustering behaviour were selected each time based on apparent cohesiveness of the results and cluster size distribution.</p>
+					<p>The results above came from this final round of clustering.</p>
+					<h3>Next Steps</h3>
+					<p>I approached the question the same way some amateur home cooks test if their spaghetti is cooked, and ended up with just as much of a mess, and just as little remaining substance. I'm going to step away from the problem for a bit and hopefully return with another appoach and a bit more knowledge in time for FW 2021.</p>
+				</section>
+				<section>
+					<hr/>
+					<p style="padding-top: 25px"><em><a href="http://awardwinninghuman.com">More of my nonsense.</a></em></p>
+				</section>
+			</div>
+		</div>
+
 
 	</article>
 </body>
