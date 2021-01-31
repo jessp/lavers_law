@@ -36,6 +36,10 @@ p, ul {
 	box-sizing: border-box;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .emphasis {
 	font-weight: bold;
 	color: var(--accent);
