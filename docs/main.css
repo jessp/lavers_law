@@ -576,6 +576,11 @@ table.compareTable {
 }
 
 @media (max-width: 450px) {
+
+	.hideOnMobile {
+		display: none;
+	}
+
 	.selectedTrend {
     	grid-template-columns: 125px minmax(50px, 100%);
 	}

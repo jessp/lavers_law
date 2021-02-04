@@ -2,7 +2,7 @@ class Timeline {
 
   constructor(timelineHolder, list_holder, data, selected_cluster, callback) {
   	this.circle_width = 40;
-
+    this.first_launch = true;
   	this.holder = d3.select(timelineHolder);
   	this.list_holder = d3.select(list_holder);
     this.scroll_holder = this.list_holder.node().parentNode;
@@ -14,7 +14,7 @@ class Timeline {
     this.scroll_width = 0;
     this.scroll_pos = 0;
     this.clones_height = 75 * Object.keys(this.data).length;
-    this.leftArrow = d3.select(this.scroll_holder)
+    this.left_arrow = d3.select(this.scroll_holder)
       .append("div").attr("class", "leftArrow arrow")
       .on("click", d => {
         if (this.scroll_pos - 75 <= 0){
@@ -25,11 +25,11 @@ class Timeline {
         return null;
       });
 
-    this.leftArrow.append("svg")
+    this.left_arrow.append("svg")
       .append("path")
       .attr("d", "M16 0 L0 8 L16 16");
     
-    this.rightArrow = d3.select(this.scroll_holder)
+    this.right_arrow = d3.select(this.scroll_holder)
       .append("div").attr("class", "rightArrow arrow")
       .on("click", d => {
         if (this.clones_height + this.scroll_pos + 75 >= this.scroll_width){
@@ -40,7 +40,7 @@ class Timeline {
         return null;
       });
 
-    this.rightArrow.append("svg")
+    this.right_arrow.append("svg")
       .append("path")
       .attr("d", "M0 16 L16 8 L0 0");
 
@@ -70,7 +70,7 @@ class Timeline {
     d3.select(".imTrend")
       .style("background-image", `url('./assets/out_md/${this_image[1]}')`);
     
-    const sectionStart = document.getElementById("chooseStyle");
+    const section_start = document.getElementById("chooseStyle");
 
     this.callback(this.data["" + this.selected_cluster]);
 
@@ -86,7 +86,7 @@ class Timeline {
   			this.images = this.data[this.selected_cluster];
         this.populateTrendList();
   			this.populateTimeline();
-        sectionStart.scrollIntoView({behavior: "smooth"});
+        section_start.scrollIntoView({behavior: "smooth"});
   		});
   }
 
@@ -108,22 +108,22 @@ class Timeline {
   			let that = d3.select(this);
 
   			if (that.select(".yearLabel").node() === null){
-  				let yearLabel = that.append("div")
+  				let year_label = that.append("div")
   					.attr("class", "yearLabel");
   			
-	  			yearLabel
+	  			year_label
 			  		.append("p")
 			  		.html(d[0]);
 
-			  	yearLabel
+			  	year_label
 			  		.append("div");
 
-				let circleHolder = that
+				let circle_holder = that
 			  		.append("div")
 			  		.attr("class", "dotLabel")
 			  		.append("svg");
 
-			  	circleHolder.append("circle")
+			  	circle_holder.append("circle")
 			  		.attr("class", "littleCircle")
 			  		.attr("cx", circle_width/2)
 			  		.attr("cy", circle_width/2)
@@ -171,9 +171,9 @@ class Timeline {
         const parent = d3.select(that.node().parentNode.parentNode.parentNode);
         that.selectAll("img")
           .on("click", function(e){
-            const imgSrc = this.src;
+            const img_src = this.src;
             parent.select(".yearLabel div")
-              .style("background-image", `url(${imgSrc.replace("out_sm", "out_md")}`);
+              .style("background-image", `url(${img_src.replace("out_sm", "out_md")}`);
           });
       })
 
@@ -186,7 +186,27 @@ class Timeline {
   				return `url('./assets/out_md/${name}')`;
   			}
   			return null;
-  		})
+  		});
+
+    if (this.first_launch){
+      this.holder.select(".fashionLabel ul li:nth-of-type(2)")
+        .html(function(d){
+          const image_html = d[1].map(e => `<img src='./assets/out_sm/${e}'>`).join("");
+          return `${d[0]} ${image_html} <span class='emphasis hideOnMobile'>← click me</span>`;
+        })
+        .each(function(d){
+          const that = d3.select(this);
+          const parent = d3.select(that.node().parentNode.parentNode.parentNode);
+          that.selectAll("img")
+            .on("click", function(e){
+              const img_src = this.src;
+              parent.select(".yearLabel div")
+                .style("background-image", `url(${img_src.replace("out_sm", "out_md")}`);
+            });
+        });
+        
+      this.first_launch = false;
+    }
 
   }
 
@@ -194,9 +214,9 @@ class Timeline {
   reduceArray(array){
   		return array.reduce((acc, element) => {
 		  // Extract key and height value array
-		  const [key, heightValue] = Object.entries(element)[0];
+		  const [key, height_value] = Object.entries(element)[0];
 		  // Get or create if non-exist, and push height value from array, index 0
-		  (acc[key] || (acc[key] = [])).push(heightValue);
+		  (acc[key] || (acc[key] = [])).push(height_value);
 		  return acc;
 		}, {});
   }
@@ -205,8 +225,8 @@ class Timeline {
 findLastIndex(array) {
 	var index = array.slice().reverse().findIndex(x => Object.values(x)[0].length > 0);
 	var count = array.length - 1
-	var finalIndex = index >= 0 ? count - index : index;
-	return finalIndex;
+	var final_index = index >= 0 ? count - index : index;
+	return final_index;
 }
 
 //adapted from https://codepen.io/vincentorback/pen/OpdNJa

@@ -1,4 +1,3 @@
-/*TODO normalize data to num images*/
 class LineChart {
 
   constructor(holder, year_data, button) {
