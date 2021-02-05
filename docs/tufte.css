@@ -64,11 +64,14 @@ hr {
 
 p.subtitle {
     margin-top: 1rem;
-    margin-bottom: 4rem;
     font-size: 1.8rem;
     display: block;
     line-height: 1;
     color: #828282;
+}
+
+p.byline {
+    margin-bottom: 4rem;
 }
 
 .numeral {
