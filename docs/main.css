@@ -220,7 +220,7 @@ li:first-child {
 
 .listOfTrendsContainer {
 	padding-top: 1em;
-	width: 100vw;
+	width: calc(100vw - 1px);
 	max-width: 230%;
 	position: -webkit-sticky;
 	position: sticky;
@@ -508,7 +508,7 @@ table.compareTable {
 
 	.tableHolder.hideExtra {
 	    margin-left: -28%;
-	    width: 100vw;
+	    width: 98vw;
 	}
 
 	.compareTable {
