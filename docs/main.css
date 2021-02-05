@@ -501,6 +501,23 @@ table.compareTable {
     }
 }
 
+@media (max-width: 1050px) {
+	.listOfTrendsContainer {
+		margin-left: -29%;
+	}
+
+	.tableHolder.hideExtra {
+	    margin-left: -28%;
+	    width: 100vw;
+	}
+
+	.compareTable {
+		width: 80%;
+    	margin: 0 auto;
+    	padding: 0px 5px;
+	}
+}
+
 @media (max-width: 900px) {
 	.timelineHolder {
 		max-width: 90%;
@@ -518,12 +535,6 @@ table.compareTable {
 	.compareTable tr > *:nth-child(3) svg {
 		width: 80px;
 		height: 24px;
-	}
-}
-
-@media (max-width: 950px) {
-	.listOfTrendsContainer {
-		margin-left: -29%;
 	}
 }
 
@@ -551,9 +562,7 @@ table.compareTable {
 	}
 
 	.compareTable {
-		margin-left: -28%;
-    	width: 100vw;
-    	padding: 0px 5px;
+		width: 90%;
 	}
 
 	.selectedTrend h3{
@@ -597,13 +606,19 @@ table.compareTable {
 	}
 
 	.compareTable tr > *:nth-child(3) svg {
-		width: 75px;
-		height: 20px;
+		width: 56px;
+		height: 15px;
 	}
 }
 
 @media (max-width: 400px) {
-	.compareTable {
-		font-size: 80%;
+
+	.fashionLabel {
+		font-size: 95%;
+	}
+
+	.timeline p, .timeline ul {
+    	font-size: 1.15em;
+    	line-height: 1.35em;
 	}
 }

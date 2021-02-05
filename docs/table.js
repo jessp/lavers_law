@@ -53,7 +53,7 @@ class Table {
       const table_parent = d3.select(this.table.node().parentNode);
       const is_hiding = table_parent.classed("hideExtra");
       table_parent.classed("hideExtra", !is_hiding);
-      this.collapse_button.html(is_hiding ? "Show 10 Only" : "Show All");
+      this.collapse_button.html(is_hiding ? "Show Top Only" : "Show All");
       return null;
     })
 

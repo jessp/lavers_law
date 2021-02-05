@@ -88,7 +88,7 @@ article {
 
 section {
     padding-top: 1rem;
-    padding-bottom: 4rem;
+    padding-bottom: 3rem;
     width: 55%;
     margin: 0 auto;
 }
@@ -355,7 +355,7 @@ label.margin-toggle:not(.sidenote-number) {
     height: 100%;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1050px) {
 
     section {
         width: 80%;
