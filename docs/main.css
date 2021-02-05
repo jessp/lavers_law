@@ -503,7 +503,7 @@ table.compareTable {
 
 @media (max-width: 1050px) {
 	.listOfTrendsContainer {
-		margin-left: -29%;
+		margin-left: -28%;
 	}
 
 	.tableHolder.hideExtra {
@@ -540,23 +540,23 @@ table.compareTable {
 
 @media (max-width: 600px) {
 	.timelineHolder {
-		max-width: 95vw;
+		max-width: 98vw;
     	margin-left: -28%;
     	padding-left: 4vw;
-    	width: 95vw;
+    	width: 98vw;
     	overflow: hidden;
 	}
 
 	.hideOnSmall {
 		display: none;
-		width: 95vw;
+		width: 98vw;
     	overflow: hidden;
 	}
 
 	.selectedTrend {
 		padding: 0em;
 		margin-left: -28%;
-    	width: 95vw;
+    	width: 98vw;
     	overflow: hidden;
     	grid-template-columns: 150px minmax(50px, 100%);
 	}
@@ -585,6 +585,26 @@ table.compareTable {
 }
 
 @media (max-width: 450px) {
+
+	.listOfTrendsContainer {
+    	margin-left: -20%;
+	}
+
+	.listOfTrendsContainer {
+		margin-left: -20%;
+	}
+
+	.tableHolder.hideExtra {
+	    margin-left: -20%;
+	}
+
+	.timelineHolder {
+    	margin-left: -20%;
+	}
+
+	.selectedTrend {
+		margin-left: -20%;
+	}
 
 	.hideOnMobile {
 		display: none;
