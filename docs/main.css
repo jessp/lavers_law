@@ -586,6 +586,10 @@ table.compareTable {
 
 @media (max-width: 450px) {
 
+	.compareTable tr > *:nth-child(6) {
+		display: none;
+	}
+
 	.listOfTrendsContainer {
     	margin-left: -20%;
 	}
