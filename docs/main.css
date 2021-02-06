@@ -506,7 +506,7 @@ table.compareTable {
 		margin-left: -28%;
 	}
 
-	.tableHolder.hideExtra {
+	.tableHolder {
 	    margin-left: -28%;
 	    width: 98vw;
 	}
@@ -594,7 +594,7 @@ table.compareTable {
 		margin-left: -20%;
 	}
 
-	.tableHolder.hideExtra {
+	.tableHolder {
 	    margin-left: -20%;
 	}
 
