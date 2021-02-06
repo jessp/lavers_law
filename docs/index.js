@@ -59,7 +59,7 @@ document.onreadystatechange = () => {
 					return obj;
 				});
 
-			let table = new Table(".compareTable", table_data, ".tableCollapser");
+			let table = new Table(".compareTable", table_data, "#tableCollapser");
 		});
 	})
   }

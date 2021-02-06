@@ -441,7 +441,7 @@ table.compareTable {
 	overflow: hidden;
 }
 
-.tableCollapser {
+#tableCollapser {
 	color: #fff;
     background: var(--accent);
     border: none;

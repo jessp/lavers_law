@@ -54,6 +54,9 @@ class Table {
       const is_hiding = table_parent.classed("hideExtra");
       table_parent.classed("hideExtra", !is_hiding);
       this.collapse_button.html(is_hiding ? "Show Top Only" : "Show All");
+      if (!is_hiding) {
+        location.hash = "#tableCollapser";
+      }
       return null;
     })
 
